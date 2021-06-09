@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core'
 import theme from './theme/index'
 
 import LandingPage from './pages/LandingPage'
+import Error404 from './components/shared/Error404'
 
 const OurGoal = lazy(() => import('./components/landingpage/OurGoal'))
 const GetInvolved = lazy(() => import('./components/landingpage/GetInvolved'))
@@ -17,6 +18,8 @@ const Donations = lazy(() => import('./pages/Donations'))
 const DonationDetails = lazy(() =>
    import('./components/donations/DonationDetails')
 )
+
+const Post = lazy(() => import('./pages/Post'))
 
 export default function App() {
    return (
@@ -38,6 +41,9 @@ export default function App() {
                      path="/donations/:id"
                      component={DonationDetails}
                   ></Route>
+
+                  <Route path="/post" component={Post} />
+                  <Route path="" component={Error404} />
                </Switch>
             </ThemeProvider>
          </Suspense>
