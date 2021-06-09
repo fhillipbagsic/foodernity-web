@@ -3,13 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "*",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "autosuggest-highlight": "^3.1.1",
+    "axios": "^0.21.1",
+    "date-fns": "^2.22.1",
+    "google-maps-react": "^2.0.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-geocode": "^0.2.3",
+    "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.8.3",
+    "react-places-autocomplete": "^7.3.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "zustand": "^3.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +47,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@iconify-icons/flat-color-icons": "^1.1.0",
+    "@iconify/react": "^1.1.4"
   }
 }
