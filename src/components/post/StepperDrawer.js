@@ -37,15 +37,24 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
       marginTop: '5px',
    },
-   button__green: {
+   button_green: {
+      color: 'white',
       backgroundColor: '#66BB6A',
+      '&:hover': {
+         backgroundColor: '#57A05A',
+         // Reset on touch devices, it doesn't add specificity
+         '@media (hover: none)': {
+            backgroundColor: '#66BB6A',
+         },
+      },
    },
 }))
 
 // returns a left drawer that is used to display the stepper
 // this drawer uses the left drawer component in Common folder
-export function StepperDrawer() {
+export default function StepperDrawer() {
    const classes = useStyles()
+
    return (
       <>
          <LeftDrawer>
@@ -53,7 +62,7 @@ export function StepperDrawer() {
             <Divider className={classes.divider__margin} />
             <VerticalStepper />
          </LeftDrawer>
-         <DialogDrawer buttonName="Steps" dialogTitle="Steps on Donating">
+         <DialogDrawer buttonName="Steps">
             <Title />
             <Divider className={classes.divider__margin} />
             <VerticalStepper />
@@ -61,24 +70,7 @@ export function StepperDrawer() {
       </>
    )
 }
-// // returns a dialog drawer when the page reaches responsive layout
-// // this drawer uses dialog drawer component in Common folder
-// export function StepperDrawerResponsive() {
-//    const classes = useStyles()
-//    return (
-//       <>
-//          <div className={classes.container__drawer}>
-//             <Title />
 
-//             <DialogDrawer buttonName="Steps" dialogTitle="Steps on Donating">
-//                <Title />
-//                <Divider className={classes.divider__margin} />
-//                <VerticalStepper />
-//             </DialogDrawer>
-//          </div>
-//       </>
-//    )
-// }
 // returns the title of the left drawer
 function Title() {
    const classes = useStyles()
@@ -121,12 +113,6 @@ function VerticalStepper() {
    const classes = useStyles()
    const setNext = usePostStore((state) => state.setNext)
    const setBack = usePostStore((state) => state.setBack)
-
-   // const donationImage = usePostStore((state) => state.donationImage) // null
-   // const donationName = usePostStore((state) => state.donationName) // ''
-   // const donationRecipient = usePostStore((state) => state.donationRecipient) // ''
-   // const donationCategory = usePostStore((state) => state.donationCategory) // ''
-   // const pickupLocation = usePostStore((state) => state.pickupLocation) // null
 
    const donationImage = usePostStore((state) => state.donationImage) // null
    const donationName = usePostStore((state) => state.donationName) // ''
@@ -248,10 +234,18 @@ function VerticalStepper() {
                               Back
                            </Button>
                            <Button
+                              style={{ marginTop: '8px', marginRight: '8px' }}
                               variant="contained"
-                              color="primary"
+                              color={
+                                 activeStep === steps.length - 1
+                                    ? 'default'
+                                    : 'primary'
+                              }
                               onClick={handleNext}
-                              className={classes.button}
+                              className={
+                                 activeStep === steps.length - 1 &&
+                                 classes.button_green
+                              }
                            >
                               {activeStep === steps.length - 1
                                  ? 'Post'

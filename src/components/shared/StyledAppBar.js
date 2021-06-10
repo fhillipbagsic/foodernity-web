@@ -161,7 +161,10 @@ function NavigationButtons() {
                                  <MenuItem component={Link} to="/postdonation">
                                     Post a Donation
                                  </MenuItem>
-                                 <MenuItem component={Link} to="/postdonation">
+                                 <MenuItem
+                                    component={Link}
+                                    to="/requestdonation"
+                                 >
                                     Request a Donation
                                  </MenuItem>
                               </MenuList>

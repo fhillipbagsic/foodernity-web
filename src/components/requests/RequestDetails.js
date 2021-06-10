@@ -83,7 +83,7 @@ function ActionDrawer() {
             <DonateButton />
             <ReportButton />
          </LeftDrawer>
-         <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
+         <DialogDrawer buttonName="FILTER">
             <Title />
             <Divider className={classes.divider_margin} />
             <RequestorAvatar />

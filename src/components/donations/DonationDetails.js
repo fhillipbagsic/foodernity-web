@@ -81,10 +81,7 @@ function ActionDrawer() {
             <ReceiveButton />
             <ReportButton />
          </LeftDrawer>
-         <DialogDrawer
-            buttonName="FILTER"
-            dialogTitle="Listings Filter"
-         ></DialogDrawer>
+         <DialogDrawer buttonName="FILTER"></DialogDrawer>
       </>
    )
 }

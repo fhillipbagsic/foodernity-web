@@ -47,7 +47,7 @@ export default function App() {
 
                   <Route path="/requests" component={Requests} exact />
                   <Route path="/requests/item/:id" component={RequestDetails} />
-                  <Route path="/requestdonation" componet={Request} />
+                  <Route path="/requestdonation" component={Request} />
 
                   <Route path="" component={Error404} />
                </Switch>

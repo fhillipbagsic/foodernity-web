@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
 import { GoogleApiWrapper } from 'google-maps-react'
-import { useRequestStore } from '../../store/RequestStore'
+import { useRequestStore } from '../../store/RequestsStore'
 
 const autocompleteService = { current: null }
 

@@ -79,19 +79,20 @@ function Guidelines() {
                component="h3"
                className={classes.text_bold}
             >
-               Guidelines for Donating
+               Guidelines for Posting Donations
             </Typography>
             <div className={classes.container__description}>
                <Typography variant="body1" component="p">
-                  Before proceeding to donate, you must adhere to the guidelines
-                  first to protect you and the safety of others as well. The
-                  guidelines to acknowledge are as follows:
+                  Before proceeding to post a donation, you must adhere to the
+                  guidelines first to protect you and the safety of others as
+                  well. The guidelines to acknowledge are as follows:
                </Typography>
             </div>
             <form onBlur={handleUpdateAllCheck}>{guidelinesArray}</form>
          </div>
       )
 }
+
 function AccordionItem(props) {
    const { name, label, description } = props.guideline
    const { checked, handleChange } = props

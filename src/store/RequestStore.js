@@ -1,24 +1,66 @@
 import create from 'zustand'
 
 export const useRequestStore = create((set) => ({
-   filterButton: 'Suggested',
-   setFilterButton: (filter) => {
-      set((state) => ({ filterButton: (state.filterButton = filter) }))
+   current: 0,
+   setNext: () => {
+      set((state) => ({ current: state.current + 1 }))
    },
-   userLocation: 'Metro Manila, Philippines',
-   setUserLocation: (location) => {
-      set((state) => ({ userLocation: (state.userLocation = location) }))
+   setBack: () => {
+      set((state) => ({ current: state.current - 1 }))
    },
-   distance: 3,
-   setDistance: (distance) => {
-      set((state) => ({ distance: (state.distance = distance) }))
+   checkedGuidelines: [false, false, false],
+   setCheckedGuidelines: (object) => {
+      set((state) => ({
+         checkedGuidelines: (state.checkedGuidelines = object),
+      }))
    },
-   foodCategory: [true, true, true, true, true],
-   setFoodCategory: (object) => {
-      set((state) => ({ foodCategory: (state.foodCategory = object) }))
+   requestImage: null,
+   setRequestImage: (image) => {
+      set((state) => ({ donationImage: (state.donationImage = image) }))
    },
-   donationsData: null,
-   setDonationsData: (items) => {
-      set((state) => ({ listingItem: (state.listingData = items) }))
+   requestName: '',
+   setRequestName: (name) => {
+      set((state) => ({ donationName: (state.donationName = name) }))
    },
+   requestQuantity: '',
+   setRequestQuantity: (quantity) => {
+      set((state) => ({
+         donationQuantity: (state.donationQuantity = quantity),
+      }))
+   },
+   requestCategory: '',
+   setRequestCategory: (category) => {
+      set((state) => ({
+         donationCategory: (state.donationCategory = category),
+      }))
+   },
+   requestNotes: '',
+   setRequestNotes: (note) => {
+      set((state) => ({ donationNotes: (state.donationNotes = note) }))
+   },
+   pickupLocation: null,
+   setPickupLocation: (location) => {
+      set((state) => ({
+         pickupLocation: (state.pickupLocation = location),
+      }))
+   },
+   pickupLocationCoordinate: {},
+   setPickupLocationCoordinate: (coordinate) => {
+      set((state) => ({
+         pickupLocationCoordinate: (state.pickupLocationCoordinate =
+            coordinate),
+      }))
+   },
+   pickupDate: new Date(new Date().setDate(new Date().getDate())),
+   setPickupDate: (date) => {
+      set((state) => ({
+         pickupDate: (state.pickupDate = date),
+      }))
+   },
+   // pickupTime: new Date(new Date().setDate(new Date().getDate())),
+   // setPickupTime: (time) => {
+   //    set((state) => ({
+   //       pickupTime: (state.pickupTime = time),
+   //    }))
+   // },
 }))

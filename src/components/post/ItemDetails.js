@@ -97,7 +97,7 @@ function ItemDetails() {
          <Typography variant="h6" className={classes.title}>
             Item Details
          </Typography>
-         <Paper elevation={2} className={classes.container}>
+         <Paper className={classes.container}>
             <form onBlur={handleSubmit(onSubmit)}>
                <UploadImage />
                <Divider className={classes.divider_margin} />
@@ -171,7 +171,7 @@ function DonationQuantity(props) {
                margin={responsiveLayout ? 'none' : 'normal'}
                type="text"
                variant="outlined"
-               id="donatioQuantity"
+               id="donationQuantity"
                label="Quantity"
                required
                fullWidth

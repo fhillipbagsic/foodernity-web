@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import EditIcon from '@material-ui/icons/Edit'
-import { useRequestStore } from '../../store/RequestStore'
+import { useRequestStore } from '../../store/RequestsStore'
 import LeftDrawer from '../shared/LeftDrawer'
 import DialogDrawer from '../shared/DialogDrawer'
 import ChangeLocation from './ChangeLocation'
@@ -137,7 +137,7 @@ export function FilterDrawer() {
             <SaveChanges handleUpdateChanges={handleUpdateChanges} />
             <Footer />
          </LeftDrawer>
-         <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
+         <DialogDrawer buttonName="FILTER">
             <Title />
             <FilterButtons
                filterButton={filterButton}

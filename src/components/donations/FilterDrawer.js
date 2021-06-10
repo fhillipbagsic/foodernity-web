@@ -192,7 +192,7 @@ export function FilterDrawer() {
             <SaveChanges handleUpdateChanges={handleUpdateChanges} />
             <Footer />
          </LeftDrawer>
-         <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
+         <DialogDrawer buttonName="FILTER">
             <Title />
             <FilterButtons
                filterButton={filterButton}

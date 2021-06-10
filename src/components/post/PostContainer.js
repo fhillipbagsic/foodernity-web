@@ -11,9 +11,6 @@ import DonationPreview from './DonationPreview'
 function PostContainer() {
    // this state is currently stored in the Post.js for the mean time
    const current = usePostStore((state) => state.current)
-   const theme = useTheme()
-   //  used to determine whether the page should use components intended for responsive layout
-   const responsiveLayout = useMediaQuery(theme.breakpoints.down('sm'))
 
    return (
       <MainContainer>

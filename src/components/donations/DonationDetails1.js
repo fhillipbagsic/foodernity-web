@@ -85,7 +85,7 @@ function ActionDrawerResponsive(props) {
    const classes = useStyles()
 
    return (
-      <DialogDrawer buttonName="actions" dialogTitle="Actions">
+      <DialogDrawer buttonName="actions">
          <BackButton />
          <Typography>
             Listed <span className={classes.text_bold}>2h ago</span> by

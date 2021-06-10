@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import { usePostStore } from '../../store/PostStore'
+import { useRequestStore } from '../../store/RequestStore'
 import { LocationInput } from './LocationInput'
 
 const style = {
@@ -25,11 +25,11 @@ function isEmpty(obj) {
 }
 
 export function MapContainer(props) {
-   const pickupLocationCoordinate = usePostStore(
+   const pickupLocationCoordinate = useRequestStore(
       (state) => state.pickupLocationCoordinate
    )
-   const setPickupLocation = usePostStore((state) => state.setPickupLocation)
-   const setPickupLocationCoordinate = usePostStore(
+   const setPickupLocation = useRequestStore((state) => state.setPickupLocation)
+   const setPickupLocationCoordinate = useRequestStore(
       (state) => state.setPickupLocationCoordinate
    )
    //const [address, setAddress] = useState('')
