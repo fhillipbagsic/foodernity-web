@@ -18,7 +18,7 @@ function PostContainer() {
    return (
       <MainContainer>
          {/* displays whether the filter drawer dialog should be displayed or not depending on the variable */}
-         {responsiveLayout ? <StepperDrawerResponsive /> : null}
+         {/* {responsiveLayout ? <StepperDrawerResponsive /> : null} */}
          {/* 
          If 0, return the guidelines components,
          If 1, return the itemdetails and pickupdetails components which are used to be filled up by the user

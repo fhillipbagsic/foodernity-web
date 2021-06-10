@@ -155,11 +155,14 @@ function NavigationButtons() {
                                  <MenuItem component={Link} to="/donations">
                                     Available Donations
                                  </MenuItem>
-                                 <MenuItem onClick={handleClose}>
+                                 <MenuItem component={Link} to="/requests">
                                     Requested Donations
                                  </MenuItem>
-                                 <MenuItem component={Link} to="/post">
+                                 <MenuItem component={Link} to="/postdonation">
                                     Post a Donation
+                                 </MenuItem>
+                                 <MenuItem component={Link} to="/postdonation">
+                                    Request a Donation
                                  </MenuItem>
                               </MenuList>
                            </ClickAwayListener>
@@ -202,8 +205,10 @@ function MenuButton() {
             <MenuItem component={Link} to="/donations">
                Available Donations
             </MenuItem>
-            <MenuItem onClick={handleClose}>Requested Donations</MenuItem>
-            <MenuItem component={Link} to="/post">
+            <MenuItem component={Link} to="/requests">
+               Requested Donations
+            </MenuItem>
+            <MenuItem component={Link} to="/postdonation">
                Post a Donation
             </MenuItem>
             <MenuItem onClick={handleClose}>FAQs</MenuItem>

@@ -9,14 +9,12 @@ import {
    Checkbox,
    Slider,
    makeStyles,
-   Hidden,
 } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import EditIcon from '@material-ui/icons/Edit'
-import { useFilterStore } from '../../store/FilterStore'
+import { useDonationStore } from '../../store/DonationStore'
 import LeftDrawer from '../shared/LeftDrawer'
 import DialogDrawer from '../shared/DialogDrawer'
-import 'date-fns'
 import ChangeLocation from './ChangeLocation'
 import Footer from '../shared/Footer'
 import Geocode from 'react-geocode'
@@ -81,33 +79,37 @@ const useStyles = makeStyles((theme) => ({
 export function FilterDrawer() {
    const classes = useStyles()
 
-   const setFilterButton = useFilterStore((state) => state.setFilterButton)
-   const setUserLocation = useFilterStore((state) => state.setUserLocation)
-   const setDistance = useFilterStore((state) => state.setDistance)
-   const setFoodCategory = useFilterStore((state) => state.setFoodCategory)
+   const setFilterButton = useDonationStore((state) => state.setFilterButton)
+   const setUserLocation = useDonationStore((state) => state.setUserLocation)
+   const setDistance = useDonationStore((state) => state.setDistance)
+   const setFoodCategory = useDonationStore((state) => state.setFoodCategory)
 
    const [filterButton, setTempFilterButton] = useState(
-      useFilterStore((state) => state.filterButton)
+      useDonationStore((state) => state.filterButton)
    )
 
    const [userLocation, setTempUserLocation] = useState(
-      useFilterStore((state) => state.userLocation)
+      useDonationStore((state) => state.userLocation)
    )
 
    const [distance, setTempDistance] = useState(
-      useFilterStore((state) => state.distance)
+      useDonationStore((state) => state.distance)
    )
 
    const [foodCategory, setTempFoodCategory] = useState(
-      useFilterStore((state) => state.foodCategory)
+      useDonationStore((state) => state.foodCategory)
    )
-   const setListingData = useFilterStore((state) => state.setListingData)
+   const setListingData = useDonationStore((state) => state.setListingData)
    const handleUpdateChanges = () => {
       setFilterButton(filterButton)
       setUserLocation(userLocation)
       setDistance(distance)
       setFoodCategory(foodCategory)
-
+      console.log('donation')
+      console.log(filterButton)
+      console.log(userLocation)
+      console.log(distance)
+      console.log(foodCategory)
       // const arrHolder = []
       // const arr = [
       //    'Canned Goods',
@@ -165,95 +167,119 @@ export function FilterDrawer() {
    }
 
    return (
-      <LeftDrawer>
-         <Title />
-         <FilterButtons
-            filterButton={filterButton}
-            setTempFilterButton={setTempFilterButton}
-         />
-         <Divider className={classes.divider_margin} />
-         <CurrentLocation
-            userLocation={userLocation}
-            setTempUserLocation={setTempUserLocation}
-         />
-         <Divider className={classes.divider_margin} />
-         <DistanceFilter
-            distance={distance}
-            setTempDistance={setTempDistance}
-         />
-         <Divider className={classes.divider_margin} />
-         <FoodCategory
-            foodCategory={foodCategory}
-            setTempFoodCategory={setTempFoodCategory}
-         />
-         <SaveChanges handleUpdateChanges={handleUpdateChanges} />
-         <Footer />
-      </LeftDrawer>
+      <>
+         <LeftDrawer>
+            <Title />
+            <FilterButtons
+               filterButton={filterButton}
+               setTempFilterButton={setTempFilterButton}
+            />
+            <Divider className={classes.divider_margin} />
+            <CurrentLocation
+               userLocation={userLocation}
+               setTempUserLocation={setTempUserLocation}
+            />
+            <Divider className={classes.divider_margin} />
+            <DistanceFilter
+               distance={distance}
+               setTempDistance={setTempDistance}
+            />
+            <Divider className={classes.divider_margin} />
+            <FoodCategory
+               foodCategory={foodCategory}
+               setTempFoodCategory={setTempFoodCategory}
+            />
+            <SaveChanges handleUpdateChanges={handleUpdateChanges} />
+            <Footer />
+         </LeftDrawer>
+         <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
+            <Title />
+            <FilterButtons
+               filterButton={filterButton}
+               setTempFilterButton={setTempFilterButton}
+            />
+            <Divider className={classes.divider_margin} />
+            <CurrentLocation
+               userLocation={userLocation}
+               setTempUserLocation={setTempUserLocation}
+            />
+            <Divider className={classes.divider_margin} />
+            <DistanceFilter
+               distance={distance}
+               setTempDistance={setTempDistance}
+            />
+            <Divider className={classes.divider_margin} />
+            <FoodCategory
+               foodCategory={foodCategory}
+               setTempFoodCategory={setTempFoodCategory}
+            />
+            <SaveChanges handleUpdateChanges={handleUpdateChanges} />
+         </DialogDrawer>
+      </>
    )
 }
 // returns a dialog drawer when the page reaches responsive layout
 // this drawer uses dialog drawer component in Common folder
-export function FilterDrawerResponsive() {
-   const classes = useStyles()
+// export function FilterDrawerResponsive() {
+//    const classes = useStyles()
 
-   const setFilterButton = useFilterStore((state) => state.setFilterButton)
-   const setUserLocation = useFilterStore((state) => state.setUserLocation)
-   const setDistance = useFilterStore((state) => state.setDistance)
-   const setFoodCategory = useFilterStore((state) => state.setFoodCategory)
+//    const setFilterButton = useDonationStore((state) => state.setFilterButton)
+//    const setUserLocation = useDonationStore((state) => state.setUserLocation)
+//    const setDistance = useDonationStore((state) => state.setDistance)
+//    const setFoodCategory = useDonationStore((state) => state.setFoodCategory)
 
-   const [filterButton, setTempFilterButton] = useState(
-      useFilterStore((state) => state.filterButton)
-   )
+//    const [filterButton, setTempFilterButton] = useState(
+//       useDonationStore((state) => state.filterButton)
+//    )
 
-   const [userLocation, setTempUserLocation] = useState(
-      useFilterStore((state) => state.userLocation)
-   )
+//    const [userLocation, setTempUserLocation] = useState(
+//       useDonationStore((state) => state.userLocation)
+//    )
 
-   const [distance, setTempDistance] = useState(
-      useFilterStore((state) => state.distance)
-   )
+//    const [distance, setTempDistance] = useState(
+//       useDonationStore((state) => state.distance)
+//    )
 
-   const [foodCategory, setTempFoodCategory] = useState(
-      useFilterStore((state) => state.foodCategory)
-   )
+//    const [foodCategory, setTempFoodCategory] = useState(
+//       useDonationStore((state) => state.foodCategory)
+//    )
 
-   const handleUpdateChanges = () => {
-      setFilterButton(filterButton)
-      setUserLocation(userLocation)
-      setDistance(distance)
-      setFoodCategory(foodCategory)
-   }
-   return (
-      <Hidden mdUp>
-         <div className={classes.drawer__container_responsive}>
-            <Title />
-            <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
-               <Title />
-               <FilterButtons
-                  filterButton={filterButton}
-                  setTempFilterButton={setTempFilterButton}
-               />
-               <Divider className={classes.divider_margin} />
-               <CurrentLocation
-                  userLocation={userLocation}
-                  setTempUserLocation={setTempUserLocation}
-               />
-               <Divider className={classes.divider_margin} />
-               <DistanceFilter
-                  distance={distance}
-                  setTempDistance={setTempDistance}
-               />
-               <Divider className={classes.divider_margin} />
-               <FoodCategory
-                  foodCategory={foodCategory}
-                  setTempFoodCategory={setTempFoodCategory}
-               />
-               <SaveChanges handleUpdateChanges={handleUpdateChanges} />
-            </DialogDrawer>
-         </div>
-      </Hidden>
-   )
-}
+//    const handleUpdateChanges = () => {
+//       setFilterButton(filterButton)
+//       setUserLocation(userLocation)
+//       setDistance(distance)
+//       setFoodCategory(foodCategory)
+//    }
+
+//    return (
+//       <div className={classes.drawer__container_responsive}>
+//          <Title />
+//          <DialogDrawer buttonName="FILTER" dialogTitle="Listings Filter">
+//             <Title />
+//             <FilterButtons
+//                filterButton={filterButton}
+//                setTempFilterButton={setTempFilterButton}
+//             />
+//             <Divider className={classes.divider_margin} />
+//             <CurrentLocation
+//                userLocation={userLocation}
+//                setTempUserLocation={setTempUserLocation}
+//             />
+//             <Divider className={classes.divider_margin} />
+//             <DistanceFilter
+//                distance={distance}
+//                setTempDistance={setTempDistance}
+//             />
+//             <Divider className={classes.divider_margin} />
+//             <FoodCategory
+//                foodCategory={foodCategory}
+//                setTempFoodCategory={setTempFoodCategory}
+//             />
+//             <SaveChanges handleUpdateChanges={handleUpdateChanges} />
+//          </DialogDrawer>
+//       </div>
+//    )
+// }
 // returns the title of the left drawer
 function Title() {
    const classes = useStyles()
@@ -265,7 +291,7 @@ function Title() {
             variant="h5"
             component="h2"
          >
-            Donation Listings
+            Available Donations
          </Typography>
       </div>
    )

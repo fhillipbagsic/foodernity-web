@@ -9,17 +9,19 @@ import Error404 from './components/shared/Error404'
 const OurGoal = lazy(() => import('./components/landingpage/OurGoal'))
 const GetInvolved = lazy(() => import('./components/landingpage/GetInvolved'))
 const ContactUs = lazy(() => import('./components/landingpage/ContactUs'))
-
 const Signin = lazy(() => import('./pages/Signin'))
 const Signup = lazy(() => import('./pages/Signup'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
-
 const Donations = lazy(() => import('./pages/Donations'))
 const DonationDetails = lazy(() =>
    import('./components/donations/DonationDetails')
 )
-
 const Post = lazy(() => import('./pages/Post'))
+const Requests = lazy(() => import('./pages/Requests'))
+const RequestDetails = lazy(() =>
+   import('./components/requests/RequestDetails')
+)
+const Request = lazy(() => import('./pages/Request'))
 
 export default function App() {
    return (
@@ -38,11 +40,15 @@ export default function App() {
 
                   <Route path="/donations" component={Donations} exact />
                   <Route
-                     path="/donations/:id"
+                     path="/donations/item/:id"
                      component={DonationDetails}
-                  ></Route>
+                  />
+                  <Route path="/postdonation" component={Post} />
 
-                  <Route path="/post" component={Post} />
+                  <Route path="/requests" component={Requests} exact />
+                  <Route path="/requests/item/:id" component={RequestDetails} />
+                  <Route path="/requestdonation" componet={Request} />
+
                   <Route path="" component={Error404} />
                </Switch>
             </ThemeProvider>

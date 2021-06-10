@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
 import { GoogleApiWrapper } from 'google-maps-react'
-import { useDonationStore } from '../../store/DonationStore'
+import { useRequestStore } from '../../store/RequestStore'
 
 const autocompleteService = { current: null }
 
@@ -25,7 +25,7 @@ function ChangeLocation(props) {
    const [inputValue, setInputValue] = useState('')
    const [options, setOptions] = useState([])
    const { setUserLocation } = props
-   const setUserCoordinates = useDonationStore(
+   const setUserCoordinates = useRequestStore(
       (state) => state.setUserCoordinates
    )
 

@@ -1,6 +1,6 @@
 import create from 'zustand'
 
-export const useFilterStore = create((set) => ({
+export const useDonationStore = create((set) => ({
    filterButton: 'Suggested',
    setFilterButton: (filter) => {
       set((state) => ({ filterButton: (state.filterButton = filter) }))

@@ -313,7 +313,7 @@ function DonationNotes(props) {
                value={value}
                required
                onChange={onChange}
-               placeholder="e.g., quantity, instructions"
+               placeholder="e.g., instructions"
             />
          )}
       />

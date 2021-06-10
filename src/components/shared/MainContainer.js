@@ -1,11 +1,10 @@
 import React from 'react'
-import { makeStyles, Toolbar } from '@material-ui/core'
+import { Hidden, makeStyles, Toolbar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
    content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      height: '93vh',
    },
 }))
 // returns a container used to display main contents of the page
@@ -14,7 +13,9 @@ function MainContainer(props) {
 
    return (
       <main className={classes.content}>
-         <Toolbar />
+         <Hidden smDown>
+            <Toolbar />
+         </Hidden>
          {props.children}
       </main>
    )

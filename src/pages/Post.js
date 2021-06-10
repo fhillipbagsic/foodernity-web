@@ -25,20 +25,22 @@ const useStyles = makeStyles((theme) => ({
 }))
 // the container for the whole page
 function Post() {
-   const classes = useStyles()
    const theme = useTheme()
-   //  used to determine whether the page should use components intended for responsive layout
-   const responsiveLayout = useMediaQuery(theme.breakpoints.down('sm'))
+   const responsive = useMediaQuery(theme.breakpoints.down('sm'))
 
    return (
       <>
          <Helmet>
             <title>Post Donation | Foodernity</title>
          </Helmet>
-         <div className={classes.root}>
+         <div
+            style={{
+               display: 'flex',
+               flexDirection: responsive ? 'column' : 'row',
+            }}
+         >
             <CssBaseline />
             <StyledAppBar />
-            {/* displays whether the left drawer should be displayed or not depending on the variable */}
             <StepperDrawer />
             <PostContainer />
          </div>

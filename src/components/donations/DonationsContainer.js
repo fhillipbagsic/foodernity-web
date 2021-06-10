@@ -4,12 +4,15 @@ import { FilterDrawerResponsive } from './FilterDrawer'
 import DonationItem from './DonationItem'
 import MainContainer from '../shared/MainContainer'
 import Axios from 'axios'
-import { useFilterStore } from '../../store/FilterStore'
+import { useDonationStore } from '../../store/DonationStore'
 import data from '../../__mock__/donationsData'
+// import ScrollTop from '../components/shared/ScrollTop'
+import ScrollTop from '../shared/ScrollTop'
+
 // returns the container for individual listings that is displayed as a grid
 export default function DonationsContainer() {
-   const donationsData = useFilterStore((state) => state.donationsData)
-   const setDonationsData = useFilterStore((state) => state.setDonationsData)
+   const donationsData = useDonationStore((state) => state.donationsData)
+   const setDonationsData = useDonationStore((state) => state.setDonationsData)
 
    // useEffect(() => {
    //    const obj = { userID: localStorage.getItem('userID') }
@@ -43,7 +46,6 @@ export default function DonationsContainer() {
 
    return (
       <MainContainer>
-         <FilterDrawerResponsive />
          <Grid container spacing={1}>
             <Grid item xs={12}>
                <Typography variant="h6" component="h3">
@@ -61,6 +63,7 @@ export default function DonationsContainer() {
                />
             ))}
          </Grid>
+         <ScrollTop />
       </MainContainer>
    )
 }

@@ -1,8 +1,6 @@
 import React from 'react'
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 
-import { usePostStore } from '../../store/PostStore'
-
 const style = {
    height: '250px',
    width: '100%',
@@ -15,10 +13,10 @@ const containerStyle = {
 }
 
 function MapContainer(props) {
-   const pickupLocationCoordinate = usePostStore(
-      (state) => state.pickupLocationCoordinate
-   )
-   console.log(pickupLocationCoordinate)
+   const pickupLocationCoordinate = {
+      lat: 14.6043164,
+      lng: 120.9946287,
+   }
 
    return (
       <div id="googleMaps" style={style}>

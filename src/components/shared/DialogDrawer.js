@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
-import {
-   Button,
-   Drawer,
-   Hidden,
-   makeStyles,
-   Paper,
-   Toolbar,
-} from '@material-ui/core'
-
-const drawerWidth = 350
+import { Button, Drawer, Hidden, makeStyles, Toolbar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
    drawer__container: {
       display: 'flex',
       flexDirection: 'column',
-      width: '350px',
+      width: '360px',
       padding: '20px 16px',
 
       height: '100%',
@@ -38,20 +29,28 @@ function DialogDrawer(props) {
 
    return (
       <Hidden mdUp>
-         <Button variant="text" color="primary" onClick={handleSetToggle}>
-            {props.buttonName}
-         </Button>
-         <Drawer
-            anchor="left"
-            open={toggle}
-            onClose={handleSetToggle}
+         <div
             style={{
-               zIndex: '0',
+               alignSelf: 'flex-end',
+               margin: '1rem 1rem 0 0',
             }}
          >
             <Toolbar />
-            <div className={classes.drawer__container}>{props.children}</div>
-         </Drawer>
+            <Button variant="text" color="primary" onClick={handleSetToggle}>
+               {props.buttonName}
+            </Button>
+            <Drawer
+               anchor="left"
+               open={toggle}
+               onClose={handleSetToggle}
+               style={{
+                  zIndex: '1',
+               }}
+            >
+               <Toolbar />
+               <div className={classes.drawer__container}>{props.children}</div>
+            </Drawer>
+         </div>
       </Hidden>
    )
 }

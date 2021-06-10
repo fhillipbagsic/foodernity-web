@@ -17,9 +17,8 @@ const useStyles = makeStyles({
    },
    media: {
       height: 200,
-      //position: 'absolute',
-      backgroundSize: 'cover',
-      backgroundAttachment: 'scroll',
+      width: 'auto',
+      objectFit: 'cover',
    },
    icon__location: {
       color: '#E35141',
@@ -35,7 +34,10 @@ export default function DonationItem(props) {
    return (
       <Grid item xs={6} sm={4} md={4} lg={3} xl={2}>
          <Card className={classes.root}>
-            <CardActionArea component={Link} to={`/donations/${listingID}`}>
+            <CardActionArea
+               component={Link}
+               to={`/donations/item/${listingID}`}
+            >
                <CardMedia
                   className={classes.media}
                   image={imgLoc}

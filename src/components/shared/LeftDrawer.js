@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles, Drawer, Toolbar, Hidden } from '@material-ui/core'
 
-const drawerWidth = 350
+const drawerWidth = 360
 
 const useStyles = makeStyles((theme) => ({
    drawer: {

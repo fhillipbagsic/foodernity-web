@@ -20,16 +20,13 @@ import { useHistory } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
    root: {
       width: '100%',
+      zIndex: '0',
    },
    button: {
       marginTop: theme.spacing(1),
       marginRight: theme.spacing(1),
    },
-   container__drawer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '10px',
-   },
+
    container__actions: {
       marginBottom: theme.spacing(2),
    },
@@ -50,28 +47,38 @@ const useStyles = makeStyles((theme) => ({
 export function StepperDrawer() {
    const classes = useStyles()
    return (
-      <LeftDrawer>
-         <Title />
-         <Divider className={classes.divider__margin} />
-         <VerticalStepper />
-      </LeftDrawer>
-   )
-}
-// returns a dialog drawer when the page reaches responsive layout
-// this drawer uses dialog drawer component in Common folder
-export function StepperDrawerResponsive() {
-   const classes = useStyles()
-   return (
       <>
-         <div className={classes.container__drawer}>
+         <LeftDrawer>
             <Title />
-            <DialogDrawer buttonName="Steps" dialogTitle="Steps on Donating">
-               <VerticalStepper />
-            </DialogDrawer>
-         </div>
+            <Divider className={classes.divider__margin} />
+            <VerticalStepper />
+         </LeftDrawer>
+         <DialogDrawer buttonName="Steps" dialogTitle="Steps on Donating">
+            <Title />
+            <Divider className={classes.divider__margin} />
+            <VerticalStepper />
+         </DialogDrawer>
       </>
    )
 }
+// // returns a dialog drawer when the page reaches responsive layout
+// // this drawer uses dialog drawer component in Common folder
+// export function StepperDrawerResponsive() {
+//    const classes = useStyles()
+//    return (
+//       <>
+//          <div className={classes.container__drawer}>
+//             <Title />
+
+//             <DialogDrawer buttonName="Steps" dialogTitle="Steps on Donating">
+//                <Title />
+//                <Divider className={classes.divider__margin} />
+//                <VerticalStepper />
+//             </DialogDrawer>
+//          </div>
+//       </>
+//    )
+// }
 // returns the title of the left drawer
 function Title() {
    const classes = useStyles()
