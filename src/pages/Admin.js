@@ -4,15 +4,17 @@ import { FilterDrawer } from '../components/donations/FilterDrawer'
 import StyledAppBar from '../components/shared/StyledAppBar'
 import { CssBaseline, useMediaQuery, useTheme } from '@material-ui/core'
 import DonationsContainer from '../components/donations/DonationsContainer'
+import PanelDrawer from '../components/admin/PanelDrawer'
+import AdminContainer from '../components/admin/AdminContainer'
 
-export default function Donations() {
+export default function Admin() {
    const theme = useTheme()
    const responsive = useMediaQuery(theme.breakpoints.down('sm'))
 
    return (
       <>
          <Helmet>
-            <title>Donations | Foodernity</title>
+            <title>Admin | Foodernity</title>
          </Helmet>
          <div
             style={{
@@ -22,8 +24,8 @@ export default function Donations() {
          >
             <CssBaseline />
             <StyledAppBar />
-            <FilterDrawer />
-            <DonationsContainer />
+            <PanelDrawer />
+            <AdminContainer />
          </div>
       </>
    )

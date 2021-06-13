@@ -17,20 +17,26 @@ import gpbadge from '../../assets/landingpage/gpbadge.png'
 import apbadge from '../../assets/landingpage/apbadge.png'
 import Footer from './Footer'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 function GetInvolved() {
    const [openMenu, setOpenMenu] = useState(false)
    return (
-      <Grid container justify="center">
-         <CssBaseline />
-         <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
-         <Toolbar />
-         {openMenu && <Menu />}
-         <DownloadMobile />
-         <ContinueWeb />
-         <Partnership />
-         <Footer />
-      </Grid>
+      <>
+         <Helmet>
+            <title>Get Involved | Foodernity</title>
+         </Helmet>
+         <Grid container justify="center">
+            <CssBaseline />
+            <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
+            <Toolbar />
+            {openMenu && <Menu />}
+            <DownloadMobile />
+            <ContinueWeb />
+            <Partnership />
+            <Footer />
+         </Grid>
+      </>
    )
 }
 

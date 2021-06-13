@@ -14,21 +14,27 @@ import hunger from '../../assets/landingpage/hunger.png'
 import community from '../../assets/landingpage/community.png'
 import planet from '../../assets/landingpage/planet-earth.png'
 import Footer from './Footer'
+import { Helmet } from 'react-helmet'
+
 function OurGoal() {
    const [openMenu, setOpenMenu] = useState(false)
    return (
-      <Grid container justify="center">
-         <CssBaseline />
-         <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
-         <Toolbar />
-
-         {openMenu && <Menu />}
-         <Overview />
-         <GoalOne />
-         <GoalTwo />
-         <GoalThree />
-         <Footer />
-      </Grid>
+      <>
+         <Helmet>
+            <title>Our Goal | Foodernity</title>
+         </Helmet>
+         <Grid container justify="center">
+            <CssBaseline />
+            <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
+            <Toolbar />
+            {openMenu && <Menu />}
+            <Overview />
+            <GoalOne />
+            <GoalTwo />
+            <GoalThree />
+            <Footer />
+         </Grid>
+      </>
    )
 }
 

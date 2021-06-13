@@ -18,22 +18,28 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { Link } from 'react-router-dom'
 import { NavBar, Menu } from '../components/landingpage/NavBar'
 import Footer from '../components/landingpage/Footer'
+import { Helmet } from 'react-helmet'
 
 export default function LandingPage() {
    const [openMenu, setOpenMenu] = useState(false)
    return (
-      <Grid container justify="center">
-         <CssBaseline />
-         <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
-         <Toolbar />
-         {openMenu && <Menu />}
-         <Hero />
-         <Goal />
-         <RequestingSteps />
-         <DonatingSteps />
-         <Partner />
-         <Footer />
-      </Grid>
+      <>
+         <Helmet>
+            <title>Foodernity</title>
+         </Helmet>
+         <Grid container justify="center">
+            <CssBaseline />
+            <NavBar openMenu={openMenu} setOpenMenu={setOpenMenu} />
+            <Toolbar />
+            {openMenu && <Menu />}
+            <Hero />
+            <Goal />
+            <RequestingSteps />
+            <DonatingSteps />
+            <Partner />
+            <Footer />
+         </Grid>
+      </>
    )
 }
 

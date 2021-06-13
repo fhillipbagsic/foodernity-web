@@ -22,7 +22,9 @@ const RequestDetails = lazy(() =>
    import('./components/requests/RequestDetails')
 )
 const Request = lazy(() => import('./pages/Request'))
-
+const FAQs = lazy(() => import('./pages/FAQs'))
+const Account = lazy(() => import('./pages/Account'))
+const Admin = lazy(() => import('./pages/Admin'))
 export default function App() {
    return (
       <Router>
@@ -49,6 +51,11 @@ export default function App() {
                   <Route path="/requests/item/:id" component={RequestDetails} />
                   <Route path="/requestdonation" component={Request} />
 
+                  <Route path="/faqsguidelines" component={FAQs} />
+
+                  <Route path="/account" component={Account} />
+
+                  <Route path="/admin" component={Admin} />
                   <Route path="" component={Error404} />
                </Switch>
             </ThemeProvider>

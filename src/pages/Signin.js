@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import Axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export default function Signin() {
    const { handleSubmit, control } = useForm()
@@ -42,76 +43,87 @@ export default function Signin() {
    }
 
    return (
-      <Grid container className={classes.container__main} component="main">
-         <CssBaseline />
-         <Grid
-            container
-            item
-            xs={false}
-            md={5}
-            lg={6}
-            className={classes.container__left}
-            direction="column"
-         >
-            <Grid item xs={1} />
-            <Grid item>
-               <Typography
-                  variant="h2"
-                  className={classes.heading}
-                  component="h2"
-               >
-                  Foodernity.
-               </Typography>
-               <Typography variant="h6" className={classes.slogan}>
-                  Magbigay ayon sa kakayahan, <br /> Kumuha batay sa
-                  pangangailangan
-               </Typography>
+      <>
+         <Helmet>
+            <title>Sign In | Foodernity</title>
+         </Helmet>
+         <Grid container className={classes.container__main} component="main">
+            <CssBaseline />
+            <Grid
+               container
+               item
+               xs={false}
+               md={5}
+               lg={6}
+               className={classes.container__left}
+               direction="column"
+            >
+               <Grid item xs={1} />
+               <Grid item>
+                  <Typography
+                     variant="h2"
+                     className={classes.heading}
+                     component="h2"
+                  >
+                     Foodernity.
+                  </Typography>
+                  <Typography variant="h6" className={classes.slogan}>
+                     Magbigay ayon sa kakayahan, <br /> Kumuha batay sa
+                     pangangailangan
+                  </Typography>
+               </Grid>
             </Grid>
-         </Grid>
-         <Grid container item xs={12} md={7} lg={6} direction="column">
-            <div className={classes.container__form}>
-               <Typography
-                  variant="h3"
-                  component="h1"
-                  className={classes.title}
-               >
-                  Welcome to Foodernity
-               </Typography>
-               <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-                  <EmailInput control={control} />
-                  <PasswordInput control={control} />
-                  <SignInButton className={classes.button__signin} />
+            <Grid container item xs={12} md={7} lg={6} direction="column">
+               <div className={classes.container__form}>
                   <Typography
-                     variant="body1"
-                     className={`${classes.text} ${classes.text__or}`}
+                     variant="h3"
+                     component="h1"
+                     className={classes.title}
                   >
-                     or
+                     Welcome to Foodernity
                   </Typography>
-                  <GoogleSignInButton />
-                  <Typography
-                     variant="body1"
-                     className={`${classes.text} ${classes.text__register}`}
+                  <form
+                     className={classes.form}
+                     onSubmit={handleSubmit(onSubmit)}
                   >
-                     Dont have an account?
-                     <Link to="/signup" style={{ textDecoration: 'none' }}>
-                        <span className={classes.text__register_signup}>
-                           {' '}
-                           Sign up here
-                        </span>
-                     </Link>
-                  </Typography>
-                  <Link to="/forgotpassword" style={{ textDecoration: 'none' }}>
+                     <EmailInput control={control} />
+                     <PasswordInput control={control} />
+                     <SignInButton className={classes.button__signin} />
                      <Typography
                         variant="body1"
-                        className={classes.text__forgotpassword}
+                        className={`${classes.text} ${classes.text__or}`}
                      >
-                        Forgot password?
+                        or
                      </Typography>
-                  </Link>
-               </form>
-            </div>
+                     <GoogleSignInButton />
+                     <Typography
+                        variant="body1"
+                        className={`${classes.text} ${classes.text__register}`}
+                     >
+                        Dont have an account?
+                        <Link to="/signup" style={{ textDecoration: 'none' }}>
+                           <span className={classes.text__register_signup}>
+                              {' '}
+                              Sign up here
+                           </span>
+                        </Link>
+                     </Typography>
+                     <Link
+                        to="/forgotpassword"
+                        style={{ textDecoration: 'none' }}
+                     >
+                        <Typography
+                           variant="body1"
+                           className={classes.text__forgotpassword}
+                        >
+                           Forgot password?
+                        </Typography>
+                     </Link>
+                  </form>
+               </div>
+            </Grid>
          </Grid>
-      </Grid>
+      </>
    )
 }
 // returns the contact number input field

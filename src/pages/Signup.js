@@ -12,6 +12,7 @@ import googleIcon from '@iconify-icons/flat-color-icons/google'
 import { useForm, Controller } from 'react-hook-form'
 import BackgroundImage from '../assets/account/signup-background.png'
 import Axios from 'axios'
+import { Helmet } from 'react-helmet'
 
 export default function Signup() {
    const { handleSubmit, control } = useForm()
@@ -46,55 +47,60 @@ export default function Signup() {
    }
 
    return (
-      <Grid container className={classes.root} alignItems="center">
-         <CssBaseline />
-         <Grid item xs={false} sm={2} lg={3} />
-         <Grid container item xs={12} sm={8} lg={6}>
-            <Paper className={classes.container}>
-               <form onSubmit={handleSubmit(onSubmit)}>
-                  <Typography
-                     variant="h3"
-                     className={`${classes.text_highlighted} ${classes.title}`}
-                  >
-                     Create an Account
-                  </Typography>
-                  <Grid
-                     container
-                     item
-                     xs={12}
-                     className={classes.text__fullName}
-                     spacing={2}
-                  >
-                     <FirstNameInput control={control} />
-                     <LastNameInput control={control} />
-                     <EmailInput control={control} />
-                     <PasswordInput control={control} />
-                     <ConfirmPasswordInput control={control} />
-                  </Grid>
-                  <Agreement
-                     agreement={`${classes.text} ${classes.text__agreement}`}
-                     link={classes.text_highlighted}
-                  />
-                  <SignUpButton />
-                  <Typography
-                     variant="body1"
-                     className={`${classes.text} ${classes.text__or}`}
-                  >
-                     or
-                  </Typography>
-                  <GoogleSignUpButton className={classes.button__google} />
-                  <Typography className={classes.text}>
-                     Already have an account?{' '}
-                     <span className={classes.text_highlighted}>
-                        Sign in here
-                     </span>
-                  </Typography>
-                  <br />
-               </form>
-            </Paper>
+      <>
+         <Helmet>
+            <title>Sign Up | Foodernity</title>
+         </Helmet>
+         <Grid container className={classes.root} alignItems="center">
+            <CssBaseline />
+            <Grid item xs={false} sm={2} lg={3} />
+            <Grid container item xs={12} sm={8} lg={6}>
+               <Paper className={classes.container}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                     <Typography
+                        variant="h3"
+                        className={`${classes.text_highlighted} ${classes.title}`}
+                     >
+                        Create an Account
+                     </Typography>
+                     <Grid
+                        container
+                        item
+                        xs={12}
+                        className={classes.text__fullName}
+                        spacing={2}
+                     >
+                        <FirstNameInput control={control} />
+                        <LastNameInput control={control} />
+                        <EmailInput control={control} />
+                        <PasswordInput control={control} />
+                        <ConfirmPasswordInput control={control} />
+                     </Grid>
+                     <Agreement
+                        agreement={`${classes.text} ${classes.text__agreement}`}
+                        link={classes.text_highlighted}
+                     />
+                     <SignUpButton />
+                     <Typography
+                        variant="body1"
+                        className={`${classes.text} ${classes.text__or}`}
+                     >
+                        or
+                     </Typography>
+                     <GoogleSignUpButton className={classes.button__google} />
+                     <Typography className={classes.text}>
+                        Already have an account?{' '}
+                        <span className={classes.text_highlighted}>
+                           Sign in here
+                        </span>
+                     </Typography>
+                     <br />
+                  </form>
+               </Paper>
+            </Grid>
+            <Grid item xs={false} md={2} lg={3} />
          </Grid>
-         <Grid item xs={false} md={2} lg={3} />
-      </Grid>
+      </>
    )
 }
 // returns first name input field

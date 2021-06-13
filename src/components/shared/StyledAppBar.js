@@ -40,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
    },
    navbar__actions: {
-      width: '18rem',
+      width: '25rem',
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       marginRight: theme.spacing(2),
    },
 
@@ -82,6 +82,7 @@ function StyledAppBar() {
 }
 // returns the navigation buttons of the website
 function NavigationButtons() {
+   const isAdmin = true
    const classes = useStyles()
    const [open, setOpen] = useState(false)
    const anchorRef = useRef(null)
@@ -120,6 +121,11 @@ function NavigationButtons() {
       <Hidden smDown>
          <div className={classes.navbar__actions}>
             <>
+               {isAdmin && (
+                  <Button component={Link} to="/admin">
+                     Admin Panel
+                  </Button>
+               )}
                <Button
                   ref={anchorRef}
                   aria-controls={open ? 'menu-list-grow' : undefined}
@@ -175,7 +181,7 @@ function NavigationButtons() {
                </Popper>
             </>
 
-            <Button component={Link} to="/faqs">
+            <Button component={Link} to="/faqsguidelines">
                FAQs &amp; Guidelines
             </Button>
          </div>
@@ -214,7 +220,12 @@ function MenuButton() {
             <MenuItem component={Link} to="/postdonation">
                Post a Donation
             </MenuItem>
-            <MenuItem onClick={handleClose}>FAQs</MenuItem>
+            <MenuItem component={Link} to="/requestdonation">
+               Request a Donation
+            </MenuItem>
+            <MenuItem component={Link} to="faqsguidelines">
+               FAQs
+            </MenuItem>
          </Menu>
       </Hidden>
    )

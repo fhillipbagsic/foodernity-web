@@ -10,6 +10,7 @@ import {
 import { useForm, Controller } from 'react-hook-form'
 import BackgroundImage from '../assets/account/signup-background.png'
 import Recaptcha from '../assets/account/recaptcha_img.png'
+import { Helmet } from 'react-helmet'
 
 export default function ForgotPassword() {
    const { handleSubmit, control } = useForm()
@@ -19,29 +20,37 @@ export default function ForgotPassword() {
    }
 
    return (
-      <Grid container className={classes.root} alignItems="center">
-         <CssBaseline />
-         <Grid item xs={false} sm={2} />
-         <Grid item container xs={12} sm={8}>
-            <Paper className={classes.container}>
-               <form onSubmit={handleSubmit(onSubmit)}>
-                  <Typography variant="h3" className={classes.title}>
-                     Forgot Password
-                  </Typography>
-                  <Typography variant="body1" className={classes.description}>
-                     Enter your registered email address and you will receive a
-                     password resend link.
-                  </Typography>
-                  <EmailInput control={control} />
-                  <Captcha className={classes.recaptcha} image={Recaptcha} />
-                  <SendButton className={classes.button__send} />
-                  <SignInButton className={classes.button__signin} />
-                  <br />
-               </form>
-            </Paper>
+      <>
+         <Helmet>
+            <title>Forgot Password | Foodernity</title>
+         </Helmet>
+         <Grid container className={classes.root} alignItems="center">
+            <CssBaseline />
+            <Grid item xs={false} sm={2} />
+            <Grid item container xs={12} sm={8}>
+               <Paper className={classes.container}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                     <Typography variant="h3" className={classes.title}>
+                        Forgot Password
+                     </Typography>
+                     <Typography
+                        variant="body1"
+                        className={classes.description}
+                     >
+                        Enter your registered email address and you will receive
+                        a password resend link.
+                     </Typography>
+                     <EmailInput control={control} />
+                     <Captcha className={classes.recaptcha} image={Recaptcha} />
+                     <SendButton className={classes.button__send} />
+                     <SignInButton className={classes.button__signin} />
+                     <br />
+                  </form>
+               </Paper>
+            </Grid>
+            <Grid item xs={false} sm={2} />
          </Grid>
-         <Grid item xs={false} sm={2} />
-      </Grid>
+      </>
    )
 }
 // returns the contact number field
