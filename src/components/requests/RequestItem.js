@@ -86,7 +86,8 @@ export default function RequestItem(props) {
                   <Typography variant="h6" component="h4" noWrap>
                      {requestName}
                   </Typography>
-                  <LinearProgressWithLabel value={5} />
+                  <Typography>In need of 8 pieces</Typography>
+                  {/* <LinearProgressWithLabel value={5} /> */}
                   <Grid container alignItems="center">
                      <LocationOnIcon
                         fontSize="small"

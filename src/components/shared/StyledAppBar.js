@@ -166,12 +166,12 @@ function NavigationButtons() {
                                  <MenuItem component={Link} to="/postdonation">
                                     Post a Donation
                                  </MenuItem>
-                                 <MenuItem
+                                 {/* <MenuItem
                                     component={Link}
                                     to="/requestdonation"
                                  >
                                     Request a Donation
-                                 </MenuItem>
+                                 </MenuItem> */}
                               </MenuList>
                            </ClickAwayListener>
                         </Paper>
@@ -303,9 +303,9 @@ function MenuButton() {
             <MenuItem component={Link} to="/postdonation">
                Post a Donation
             </MenuItem>
-            <MenuItem component={Link} to="/requestdonation">
+            {/* <MenuItem component={Link} to="/requestdonation">
                Request a Donation
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem component={Link} to="faqsguidelines">
                FAQs
             </MenuItem>

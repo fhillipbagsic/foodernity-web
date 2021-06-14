@@ -23,11 +23,6 @@ import ListAltIcon from '@material-ui/icons/ListAlt'
 import ShareIcon from '@material-ui/icons/Share'
 import { grey } from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
-import ThumbUpIcon from '@material-ui/icons/ThumbUp'
-import { useMessageStore } from '../../store/MessageStore'
-import { fulfillData } from '../../__mock__/FulfillRequestData'
-import { requestedData } from '../../__mock__/RequestedDonationsData'
-import { donorData } from '../../__mock__/DonorData'
 
 export default function Requested() {
    return (
@@ -75,29 +70,8 @@ function DonationTabs() {
             </AppBar>
          </Box>
 
-         <TabPanel value={value} index={0}>
-            {requestedData.map((donation) => (
-               <RequestedDonation
-                  listingID={donation.listingID}
-                  donationName={donation.donationName}
-                  imgLoc={donation.imgLoc}
-                  max={donation.max}
-                  left={donation.left}
-               />
-            ))}
-         </TabPanel>
-         <TabPanel value={value} index={1}>
-            {fulfillData.map((donation) => (
-               <FulfillDonation
-                  listingID={donation.listingID}
-                  donationName={donation.donationName}
-                  imgLoc={donation.imgLoc}
-                  quantity={donation.quantity}
-                  pickupLocation={donation.pickupLocation}
-                  pickupDate={donation.pickupDate}
-               />
-            ))}
-         </TabPanel>
+         <TabPanel value={value} index={0}></TabPanel>
+         <TabPanel value={value} index={1}></TabPanel>
       </div>
    )
 }
@@ -135,314 +109,6 @@ function SearchField() {
       </div>
    )
 }
-
-function RequestedDonation(props) {
-   const { listingID, donationName, imgLoc, max, left } = props
-   const classes = useStyles()
-   const [open, setOpen] = useState(false)
-
-   const handleClickOpen = () => {
-      setOpen(true)
-   }
-   const handleClose = () => {
-      setOpen(false)
-   }
-
-   return (
-      <Box boxShadow={1} borderRadius={5}>
-         <div className={classes.container__listingitem}>
-            <img
-               className={classes.image__listingitem}
-               src={imgLoc}
-               alt="donation"
-            />
-            <div className={classes.container__listingdetail}>
-               <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
-                     {donationName}
-                  </Typography>
-                  <DonationProgress max={max} left={left} />
-
-                  {/* <Box display="flex" flexDirection="row">
-                     <ChatBubbleIcon
-                        style={{
-                           fontSize: '20px',
-                           color: '#2196F3',
-                           marginRight: '5px',
-                        }}
-                     />
-                     <Typography
-                        variant="body2"
-                        style={{ marginBottom: '1.5rem' }}
-                     >
-                        You have messages from donees
-                     </Typography>
-                  </Box> */}
-               </div>
-               <div className={classes.container__button}>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_lightblue}
-                     startIcon={<ListAltIcon />}
-                     onClick={handleClickOpen}
-                  >
-                     View details
-                  </Button>
-               </div>
-            </div>
-         </div>
-         <DonationDetails open={open} handleClose={handleClose} />
-      </Box>
-   )
-}
-
-function FulfillDonation(props) {
-   const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
-   const {
-      listingID,
-      donationName,
-      imgLoc,
-      quantity,
-      pickupLocation,
-      pickupDate,
-   } = props
-   const classes = useStyles()
-
-   return (
-      <Box boxShadow={1} borderRadius={5}>
-         <div className={classes.container__listingitem}>
-            <img
-               className={classes.image__listingitem}
-               src={imgLoc}
-               alt="donation"
-            />
-            <div className={classes.container__listingdetail}>
-               <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
-                     {donationName}
-                  </Typography>
-                  <Typography variant="body2">
-                     <span style={{ fontWeight: 'bold' }}>To donate:</span>{' '}
-                     {quantity} pieces
-                  </Typography>
-                  <Typography variant="body2" style={{ fontWeight: '300' }}>
-                     Pickup on{' '}
-                     <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
-                     <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
-                  </Typography>
-               </div>
-               <div className={classes.container__button}>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_lightblue}
-                     startIcon={<ListAltIcon />}
-                     onClick={() => {
-                        setOpenMessage(true)
-                     }}
-                  >
-                     Message Requestor
-                  </Button>
-               </div>
-            </div>
-         </div>
-      </Box>
-   )
-}
-
-function DonationDetails(props) {
-   const { handleClose, open } = props
-   const classes = useStyles()
-
-   return (
-      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
-         <DialogTitle>Donation Details</DialogTitle>
-         <DialogContent dividers>
-            <Grid container>
-               <Grid container item xs={12} md={12}>
-                  <Grid item xs={3}>
-                     <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5XYbVIMtYStaldxv09IlkCFzQ0vMZh9Ntuw&usqp=CAU"
-                        alt="donation"
-                        style={{
-                           height: '100%',
-                           width: '100%',
-                           borderRadius: '5px',
-                           objectFit: 'cover',
-                        }}
-                     />
-                  </Grid>
-                  <Grid item xs={9}>
-                     <Box style={{ marginLeft: '1rem' }}>
-                        <Typography className={classes.text_bold}>
-                           Pancit Canton Noodles
-                        </Typography>
-                        <Box style={{ margin: '5px 0' }}>
-                           <Chip
-                              label="Instant Noodles"
-                              color="primary"
-                              size="small"
-                           />
-                        </Box>
-                        <Typography variant="body2">
-                           <span style={{ fontWeight: 'bold' }}>Quantity:</span>{' '}
-                           72/100
-                        </Typography>
-                        <Typography variant="body2">
-                           <span style={{ fontWeight: 'bold' }}>
-                              Expiry Date:
-                           </span>{' '}
-                           September 15, 2021
-                        </Typography>
-                     </Box>
-                  </Grid>
-                  <Grid item xs={10}>
-                     <Typography className={classes.text_bold}>
-                        Donation notes
-                     </Typography>
-                     <Typography variant="body2">
-                        i have 100 pieces of lucky me pancit canton noodles.
-                        assorted flavors will be given to you.
-                     </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                     <Divider className={classes.divider_margin} />
-                  </Grid>
-                  <Grid container xs={12}>
-                     <Grid item xs={6}>
-                        <Typography
-                           className={classes.text_bold}
-                           style={{ textAlign: 'center' }}
-                        >
-                           Pickup location
-                        </Typography>
-                        <Typography
-                           variant="body2"
-                           style={{ textAlign: 'center' }}
-                        >
-                           National University-Manila
-                        </Typography>
-                     </Grid>
-                     <Grid item xs={6}>
-                        <Typography
-                           className={classes.text_bold}
-                           style={{ textAlign: 'center' }}
-                        >
-                           Pickup date
-                        </Typography>
-                        <Typography
-                           variant="body2"
-                           style={{ textAlign: 'center' }}
-                        >
-                           July 03, 2021
-                        </Typography>
-                     </Grid>
-                  </Grid>
-               </Grid>
-               {/* <Grid container item xs={12} md={6} direction="column">
-                  <Grid item>
-                     <Typography
-                        variant="h6"
-                        className={classes.text_bold}
-                        gutterBottom
-                     >
-                        Donors who fulfilled
-                     </Typography>
-                     <Typography variant="subtitle">
-                        (You can message the donors on the Received Donations
-                        Tab)
-                     </Typography>
-                  </Grid> */}
-               {/* <Grid item>
-                     <div
-                        style={{
-                           overflowY: 'auto',
-                           maxHeight: '300px',
-                           display: 'flex',
-                           flexDirection: 'column',
-                        }}
-                     >
-                        {donorData.map((message) => (
-                           <MessageItem
-                              avatar={message.avatar}
-                              doneeName={message.doneeName}
-                              quantity={message.quantity}
-                           />
-                        ))}
-                     </div>
-                  </Grid> */}
-               {/* </Grid> */}
-            </Grid>
-         </DialogContent>
-      </Dialog>
-   )
-}
-
-function DonationProgress(props) {
-   const { max, left } = props
-   const multiplier = 100 / max
-   const value = multiplier * (max - left)
-   // const valueBuffer =
-   return (
-      <Box style={{ margin: '7px 0' }}>
-         <Box display="flex" alignItems="center">
-            <Box width="50%">
-               <LinearProgress variant="determinate" value={value} />
-            </Box>
-         </Box>
-         <Box>
-            {left !== 0 ? (
-               <Typography variant="body2">
-                  <span style={{ fontWeight: 'bold' }}>Still needs: </span>
-                  {left} out of {max}
-               </Typography>
-            ) : (
-               <Typography
-                  variant="body2"
-                  style={{ margin: '8px 0', fontWeight: '300' }}
-               >
-                  All {max} pieces have already been fulfilled
-               </Typography>
-            )}
-         </Box>
-      </Box>
-   )
-}
-
-// function MessageItem(props) {
-//    const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
-//    const classes = useStyles()
-//    const { avatar, doneeName, quantity } = props
-
-//    return (
-//       <Box
-//          display="flex"
-//          alignItems="center"
-//          m={1}
-//          style={{
-//             cursor: 'pointer',
-//          }}
-//          onClick={() => {
-//             setOpenMessage(true)
-//          }}
-//       >
-//          <Avatar style={{ marginRight: '1rem' }} alt="user" src={avatar} />
-//          <Box>
-//             <Typography className={classes.text_bold}>{doneeName}</Typography>
-//             <Typography variant="body2">Donated {quantity} pieces</Typography>
-//          </Box>
-//       </Box>
-//    )
-// }
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -559,3 +225,278 @@ const useStyles = makeStyles((theme) => ({
       },
    },
 }))
+
+// function RequestedDonation(props) {
+//    const { listingID, donationName, imgLoc, max, left } = props
+//    const classes = useStyles()
+//    const [open, setOpen] = useState(false)
+
+//    const handleClickOpen = () => {
+//       setOpen(true)
+//    }
+//    const handleClose = () => {
+//       setOpen(false)
+//    }
+
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <DonationProgress max={max} left={left} />
+
+//                   {/* <Box display="flex" flexDirection="row">
+//                      <ChatBubbleIcon
+//                         style={{
+//                            fontSize: '20px',
+//                            color: '#2196F3',
+//                            marginRight: '5px',
+//                         }}
+//                      />
+//                      <Typography
+//                         variant="body2"
+//                         style={{ marginBottom: '1.5rem' }}
+//                      >
+//                         You have messages from donees
+//                      </Typography>
+//                   </Box> */}
+//                </div>
+//                <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                      onClick={handleClickOpen}
+//                   >
+//                      View details
+//                   </Button>
+//                </div>
+//             </div>
+//          </div>
+//          <DonationDetails open={open} handleClose={handleClose} />
+//       </Box>
+//    )
+// }
+
+// function FulfillDonation(props) {
+//    const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
+//    const {
+//       listingID,
+//       donationName,
+//       imgLoc,
+//       quantity,
+//       pickupLocation,
+//       pickupDate,
+//    } = props
+//    const classes = useStyles()
+
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <Typography variant="body2">
+//                      <span style={{ fontWeight: 'bold' }}>To donate:</span>{' '}
+//                      {quantity} pieces
+//                   </Typography>
+//                   <Typography variant="body2" style={{ fontWeight: '300' }}>
+//                      Pickup on{' '}
+//                      <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
+//                      <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
+//                   </Typography>
+//                </div>
+//                <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                      onClick={() => {
+//                         setOpenMessage(true)
+//                      }}
+//                   >
+//                      Message Requestor
+//                   </Button>
+//                </div>
+//             </div>
+//          </div>
+//       </Box>
+//    )
+// }
+
+// function DonationDetails(props) {
+//    const { handleClose, open } = props
+//    const classes = useStyles()
+
+//    return (
+//       <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+//          <DialogTitle>Donation Details</DialogTitle>
+//          <DialogContent dividers>
+//             <Grid container>
+//                <Grid container item xs={12} md={12}>
+//                   <Grid item xs={3}>
+//                      <img
+//                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5XYbVIMtYStaldxv09IlkCFzQ0vMZh9Ntuw&usqp=CAU"
+//                         alt="donation"
+//                         style={{
+//                            height: '100%',
+//                            width: '100%',
+//                            borderRadius: '5px',
+//                            objectFit: 'cover',
+//                         }}
+//                      />
+//                   </Grid>
+//                   <Grid item xs={9}>
+//                      <Box style={{ marginLeft: '1rem' }}>
+//                         <Typography className={classes.text_bold}>
+//                            Pancit Canton Noodles
+//                         </Typography>
+//                         <Box style={{ margin: '5px 0' }}>
+//                            <Chip
+//                               label="Instant Noodles"
+//                               color="primary"
+//                               size="small"
+//                            />
+//                         </Box>
+//                         <Typography variant="body2">
+//                            <span style={{ fontWeight: 'bold' }}>Quantity:</span>{' '}
+//                            72/100
+//                         </Typography>
+//                         <Typography variant="body2">
+//                            <span style={{ fontWeight: 'bold' }}>
+//                               Expiry Date:
+//                            </span>{' '}
+//                            September 15, 2021
+//                         </Typography>
+//                      </Box>
+//                   </Grid>
+//                   <Grid item xs={10}>
+//                      <Typography className={classes.text_bold}>
+//                         Donation notes
+//                      </Typography>
+//                      <Typography variant="body2">
+//                         i have 100 pieces of lucky me pancit canton noodles.
+//                         assorted flavors will be given to you.
+//                      </Typography>
+//                   </Grid>
+//                   <Grid item xs={12}>
+//                      <Divider className={classes.divider_margin} />
+//                   </Grid>
+//                   <Grid container xs={12}>
+//                      <Grid item xs={6}>
+//                         <Typography
+//                            className={classes.text_bold}
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            Pickup location
+//                         </Typography>
+//                         <Typography
+//                            variant="body2"
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            National University-Manila
+//                         </Typography>
+//                      </Grid>
+//                      <Grid item xs={6}>
+//                         <Typography
+//                            className={classes.text_bold}
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            Pickup date
+//                         </Typography>
+//                         <Typography
+//                            variant="body2"
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            July 03, 2021
+//                         </Typography>
+//                      </Grid>
+//                   </Grid>
+//                </Grid>
+//             </Grid>
+//          </DialogContent>
+//       </Dialog>
+//    )
+// }
+
+// function DonationProgress(props) {
+//    const { max, left } = props
+//    const multiplier = 100 / max
+//    const value = multiplier * (max - left)
+//    // const valueBuffer =
+//    return (
+//       <Box style={{ margin: '7px 0' }}>
+//          <Box display="flex" alignItems="center">
+//             <Box width="50%">
+//                <LinearProgress variant="determinate" value={value} />
+//             </Box>
+//          </Box>
+//          <Box>
+//             {left !== 0 ? (
+//                <Typography variant="body2">
+//                   <span style={{ fontWeight: 'bold' }}>Still needs: </span>
+//                   {left} out of {max}
+//                </Typography>
+//             ) : (
+//                <Typography
+//                   variant="body2"
+//                   style={{ margin: '8px 0', fontWeight: '300' }}
+//                >
+//                   All {max} pieces have already been fulfilled
+//                </Typography>
+//             )}
+//          </Box>
+//       </Box>
+//    )
+// }
+
+// function MessageItem(props) {
+//    const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
+//    const classes = useStyles()
+//    const { avatar, doneeName, quantity } = props
+
+//    return (
+//       <Box
+//          display="flex"
+//          alignItems="center"
+//          m={1}
+//          style={{
+//             cursor: 'pointer',
+//          }}
+//          onClick={() => {
+//             setOpenMessage(true)
+//          }}
+//       >
+//          <Avatar style={{ marginRight: '1rem' }} alt="user" src={avatar} />
+//          <Box>
+//             <Typography className={classes.text_bold}>{doneeName}</Typography>
+//             <Typography variant="body2">Donated {quantity} pieces</Typography>
+//          </Box>
+//       </Box>
+//    )
+// }

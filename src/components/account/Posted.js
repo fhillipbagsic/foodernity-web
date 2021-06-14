@@ -6,8 +6,6 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import {
-   Avatar,
-   Backdrop,
    Button,
    Chip,
    Dialog,
@@ -15,8 +13,6 @@ import {
    DialogTitle,
    Divider,
    Grid,
-   LinearProgress,
-   Paper,
    useMediaQuery,
    useTheme,
 } from '@material-ui/core'
@@ -25,7 +21,6 @@ import InputBase from '@material-ui/core/InputBase'
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import ShareIcon from '@material-ui/icons/Share'
 import { grey } from '@material-ui/core/colors'
-import AddIcon from '@material-ui/icons/Add'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
 import { useMessageStore } from '../../store/MessageStore'
 import { donationsData } from '../../__mock__/PostedDonationsData'
@@ -247,8 +242,8 @@ function DonationItem(props) {
 }
 
 function Label(props) {
-   const classes = useStyles()
    const { status, postDateTime, pickupLocation, pickupDate } = props
+
    if (status === 'Posted') {
       return (
          <Typography variant="body2">
@@ -375,6 +370,7 @@ function DonationDetails(props) {
                                  maxWidth: '490px',
                                  width: '100%',
                                  height: '100%',
+                                 maxHeight: '600px',
                                  objectFit: 'contain',
                               }}
                            />
@@ -388,12 +384,6 @@ function DonationDetails(props) {
                            >
                               {donationDetails[0].donationName}
                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                           <Box display="flex">
-                              <LocationOnIcon color="secondary" />
-                              <Typography>3 kilometers away</Typography>
-                           </Box>
                         </Grid>
                         <Grid item xs={12} style={{ margin: '5px 0' }}>
                            <Box display="flex">

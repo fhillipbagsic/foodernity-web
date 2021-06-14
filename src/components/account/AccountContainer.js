@@ -4,21 +4,19 @@ import Posted from './Posted'
 import Received from './Received'
 import Requested from './Requested'
 import ScrollTop from '../shared/ScrollTop'
+import Profile from './Profile'
+import EditProfile from './EditProfile'
 export default function AccountContainer() {
    let { path } = useRouteMatch()
 
    return (
       <MainContainer>
          <Switch>
-            <Route path={`${path}/`} exact>
-               <Posted />
-            </Route>
-            <Route path={`${path}/receiveddonations`}>
-               <Received />
-            </Route>
-            <Route path={`${path}/requesteddonations`}>
-               <Requested />
-            </Route>
+            <Route path={`${path}/`} exact component={Posted} />
+            <Route path={`${path}/receiveddonations`} component={Received} />
+            <Route path={`${path}/requesteddonations`} component={Requested} />
+            <Route path={`${path}/myprofile`} component={Profile} />
+            <Route path={`${path}/editprofile`} component={EditProfile} />
          </Switch>
          <ScrollTop />
       </MainContainer>

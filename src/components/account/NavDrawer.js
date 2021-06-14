@@ -52,6 +52,10 @@ export default function NavDrawer() {
             {iconList.map((list) => (
                <Tab icon={list.icon} label={list.label} link={list.link} />
             ))}
+            <Subtitle title="Profile" />
+            {iconList2.map((list) => (
+               <Tab icon={list.icon} label={list.label} link={list.link} />
+            ))}
          </LeftDrawer>
          <DialogDrawer buttonName="Account">
             <Title />
