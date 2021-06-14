@@ -19,6 +19,7 @@ import {
 import { deepOrange } from '@material-ui/core/colors'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
+import { useAdminStore } from '../../store/AdminStore'
 
 const useStyles = makeStyles((theme) => ({
    navbar: {
@@ -73,16 +74,14 @@ function StyledAppBar() {
             </div>
             <MenuButton />
             <NavigationButtons />
-            <IconButton component={Link} to="/account">
-               <Avatar className={classes.avatar__color_orange}>FB</Avatar>
-            </IconButton>
+            <MenuListComposition />
          </Toolbar>
       </AppBar>
    )
 }
 // returns the navigation buttons of the website
 function NavigationButtons() {
-   const isAdmin = true
+   const isAdmin = useAdminStore((state) => state.isAdmin)
    const classes = useStyles()
    const [open, setOpen] = useState(false)
    const anchorRef = useRef(null)
@@ -188,7 +187,91 @@ function NavigationButtons() {
       </Hidden>
    )
 }
+function MenuListComposition() {
+   const classes = useStyles()
+   const [open, setOpen] = React.useState(false)
+   const anchorRef = React.useRef(null)
 
+   const handleToggle = () => {
+      setOpen((prevOpen) => !prevOpen)
+   }
+
+   const handleClose = (event) => {
+      if (anchorRef.current && anchorRef.current.contains(event.target)) {
+         return
+      }
+
+      setOpen(false)
+   }
+
+   function handleListKeyDown(event) {
+      if (event.key === 'Tab') {
+         event.preventDefault()
+         setOpen(false)
+      }
+   }
+
+   // return focus to the button when we transitioned from !open -> open
+   const prevOpen = React.useRef(open)
+   React.useEffect(() => {
+      if (prevOpen.current === true && open === false) {
+         anchorRef.current.focus()
+      }
+
+      prevOpen.current = open
+   }, [open])
+
+   return (
+      <div className={classes.root}>
+         <div>
+            <IconButton
+               ref={anchorRef}
+               aria-controls={open ? 'menu-list-grow' : undefined}
+               aria-haspopup="true"
+               onClick={handleToggle}
+            >
+               <Avatar className={classes.avatar__color_orange}>FB</Avatar>
+            </IconButton>
+            <Popper
+               open={open}
+               anchorEl={anchorRef.current}
+               role={undefined}
+               transition
+               disablePortal
+            >
+               {({ TransitionProps, placement }) => (
+                  <Grow
+                     {...TransitionProps}
+                     style={{
+                        transformOrigin:
+                           placement === 'bottom'
+                              ? 'center top'
+                              : 'center bottom',
+                     }}
+                  >
+                     <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                           <MenuList
+                              autoFocusItem={open}
+                              id="menu-list-grow"
+                              onKeyDown={handleListKeyDown}
+                           >
+                              <MenuItem component={Link} to="/account">
+                                 My account
+                              </MenuItem>
+                              <MenuItem component={Link} to="/signin">
+                                 Logout
+                              </MenuItem>
+                           </MenuList>
+                        </ClickAwayListener>
+                     </Paper>
+                  </Grow>
+               )}
+            </Popper>
+         </div>
+      </div>
+   )
+}
 // returns the menu button when the page reaches the responsive layout
 function MenuButton() {
    const [anchorEl, setAnchorEl] = useState(null)

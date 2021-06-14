@@ -17,9 +17,9 @@ export default function AdminContainer() {
             <Route path={`${path}/monitor`}>
                <Monitor />
             </Route>
-            <Route path={`${path}/reporteddonations`}>
+            {/* <Route path={`${path}/reporteddonations`}>
                <Typography>Reported donation</Typography>
-            </Route>
+            </Route> */}
             <Route path={`${path}/users`}>
                <Users />
             </Route>

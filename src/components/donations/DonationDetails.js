@@ -63,6 +63,28 @@ function ActionDrawer() {
             <Title />
             <Divider className={classes.divider_margin1} />
             <RequestorAvatar />
+            {/* <Divider className={classes.divider_margin1} /> */}
+            {/* <DonationProgess /> */}
+            {/* <Divider className={classes.divider_margin1} /> */}
+            {/* <Grid container spacing={1} justify="center">
+               <Grid item xs={5}>
+                  <QuantityInput />
+               </Grid>
+
+               <Grid item xs={12}>
+                  <Typography variant="caption">
+                     * max of 10 quantity can only be received
+                  </Typography>
+               </Grid>
+            </Grid> */}
+            <Divider className={classes.divider_margin1} />
+            <ReceiveButton />
+            <ReportButton />
+         </LeftDrawer>
+         <DialogDrawer buttonName="FILTER">
+            <Title />
+            <Divider className={classes.divider_margin1} />
+            <RequestorAvatar />
             <Divider className={classes.divider_margin1} />
             <DonationProgess />
             <Divider className={classes.divider_margin1} />
@@ -80,8 +102,7 @@ function ActionDrawer() {
             <Divider className={classes.divider_margin1} />
             <ReceiveButton />
             <ReportButton />
-         </LeftDrawer>
-         <DialogDrawer buttonName="FILTER"></DialogDrawer>
+         </DialogDrawer>
       </>
    )
 }
@@ -290,7 +311,7 @@ function DetailsContainer() {
                            variant="body2"
                            style={{ textAlign: 'center' }}
                         >
-                           100 pieces
+                           12 pieces
                         </Typography>
                      </Typography>
                   </Grid>
@@ -313,7 +334,7 @@ function DetailsContainer() {
                         Donation Notes
                      </Typography>
                      <Typography variant="body2">
-                        i have 100 pieces of lucky me pancit canton noodles.
+                        i have 12 pieces of lucky me pancit canton noodles.
                         assorted flavors will be given to you.
                      </Typography>
                   </Grid>

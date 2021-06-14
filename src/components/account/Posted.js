@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, fade } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import {
    Avatar,
+   Backdrop,
    Button,
    Chip,
    Dialog,
@@ -16,6 +17,8 @@ import {
    Grid,
    LinearProgress,
    Paper,
+   useMediaQuery,
+   useTheme,
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
@@ -23,10 +26,11 @@ import ListAltIcon from '@material-ui/icons/ListAlt'
 import ShareIcon from '@material-ui/icons/Share'
 import { grey } from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
-import { data } from '../../__mock__/MessagesData'
-import { Data } from '../../__mock__/PostedDonationsData'
-import { completedData } from '../../__mock__/completedDonationsData'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
+import { useMessageStore } from '../../store/MessageStore'
+import { donationsData } from '../../__mock__/PostedDonationsData'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import LocationPreview from '../shared/LocationPreview'
 
 export default function Posted() {
    return (
@@ -69,32 +73,76 @@ function DonationTabs() {
                   variant="fullWidth"
                >
                   <Tab label="Posted" />
-                  <Tab label="Completed" />
+                  <Tab label="Ongoing" />
+                  <Tab label="Claimed" />
+                  <Tab label="Unposted" />
                </Tabs>
             </AppBar>
          </Box>
 
          <TabPanel value={value} index={0}>
-            {Data.map((donation) => (
-               <PostedDonation
-                  listingID={donation.listingID}
-                  donationName={donation.donationName}
-                  imgLoc={donation.imgLoc}
-                  max={donation.max}
-                  left={donation.left}
-               />
-            ))}
+            {donationsData
+               .filter((donation) => donation.status === 'Posted')
+               .map((donation) => (
+                  <DonationItem
+                     key={donation.listingID}
+                     listingID={donation.listingID}
+                     imgLoc={donation.imgLoc}
+                     donationName={donation.donationName}
+                     pickupLocation={donation.pickupLocation}
+                     pickupDate={donation.pickupDate}
+                     status={donation.status}
+                     postDateTime={donation.postDateTime}
+                  />
+               ))}
          </TabPanel>
          <TabPanel value={value} index={1}>
-            {completedData.map((donation) => (
-               <CompletedDonation
-                  listingID={donation.listingID}
-                  donationName={donation.donationName}
-                  imgLoc={donation.imgLoc}
-                  max={donation.max}
-                  left={donation.left}
-               />
-            ))}
+            {donationsData
+               .filter((donation) => donation.status === 'Ongoing')
+               .map((donation) => (
+                  <DonationItem
+                     key={donation.listingID}
+                     listingID={donation.listingID}
+                     imgLoc={donation.imgLoc}
+                     donationName={donation.donationName}
+                     pickupLocation={donation.pickupLocation}
+                     pickupDate={donation.pickupDate}
+                     status={donation.status}
+                     postDateTime={donation.postDateTime}
+                  />
+               ))}
+         </TabPanel>
+         <TabPanel value={value} index={2}>
+            {donationsData
+               .filter((donation) => donation.status === 'Claimed')
+               .map((donation) => (
+                  <DonationItem
+                     key={donation.listingID}
+                     listingID={donation.listingID}
+                     imgLoc={donation.imgLoc}
+                     donationName={donation.donationName}
+                     pickupLocation={donation.pickupLocation}
+                     pickupDate={donation.pickupDate}
+                     status={donation.status}
+                     postDateTime={donation.postDateTime}
+                  />
+               ))}
+         </TabPanel>
+         <TabPanel value={value} index={3}>
+            {donationsData
+               .filter((donation) => donation.status === 'Unposted')
+               .map((donation) => (
+                  <DonationItem
+                     key={donation.listingID}
+                     listingID={donation.listingID}
+                     imgLoc={donation.imgLoc}
+                     donationName={donation.donationName}
+                     pickupLocation={donation.pickupLocation}
+                     pickupDate={donation.pickupDate}
+                     status={donation.status}
+                     postDateTime={donation.postDateTime}
+                  />
+               ))}
          </TabPanel>
       </div>
    )
@@ -134,9 +182,18 @@ function SearchField() {
    )
 }
 
-function PostedDonation(props) {
-   const { listingID, donationName, imgLoc, max, left } = props
+function DonationItem(props) {
+   const {
+      listingID,
+      imgLoc,
+      donationName,
+      pickupLocation,
+      pickupDate,
+      status,
+      postDateTime,
+   } = props
    const classes = useStyles()
+
    const [open, setOpen] = useState(false)
 
    const handleClickOpen = () => {
@@ -156,30 +213,15 @@ function PostedDonation(props) {
             />
             <div className={classes.container__listingdetail}>
                <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
+                  <Typography variant="body1" className={classes.text_bold}>
                      {donationName}
                   </Typography>
-                  <DonationProgress max={max} left={left} />
-
-                  <Box display="flex" flexDirection="row">
-                     <ChatBubbleIcon
-                        style={{
-                           fontSize: '20px',
-                           color: '#2196F3',
-                           marginRight: '5px',
-                        }}
-                     />
-                     <Typography
-                        variant="body2"
-                        style={{ marginBottom: '1.5rem' }}
-                     >
-                        You have messages from donees
-                     </Typography>
-                  </Box>
+                  <Label
+                     status={status}
+                     postDateTime={postDateTime}
+                     pickupLocation={pickupLocation}
+                     pickupDate={pickupDate}
+                  />
                </div>
                <div className={classes.container__button}>
                   <Button
@@ -189,251 +231,265 @@ function PostedDonation(props) {
                      startIcon={<ListAltIcon />}
                      onClick={handleClickOpen}
                   >
-                     View details
+                     View Details
                   </Button>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_grey}
-                     startIcon={<ShareIcon />}
-                  >
-                     Share
-                  </Button>
+                  <ActionButtons status={status} />
                </div>
             </div>
          </div>
-         <DonationDetails open={open} handleClose={handleClose} />
+         <DonationDetails
+            listingID={listingID}
+            open={open}
+            handleClose={handleClose}
+         />
       </Box>
    )
 }
 
-function CompletedDonation(props) {
-   const { listingID, donationName, imgLoc, max, left } = props
+function Label(props) {
    const classes = useStyles()
-   const [open, setOpen] = useState(false)
-
-   const handleClickOpen = () => {
-      setOpen(true)
+   const { status, postDateTime, pickupLocation, pickupDate } = props
+   if (status === 'Posted') {
+      return (
+         <Typography variant="body2">
+            Available for request •{' '}
+            <span style={{ fontWeight: '200' }}>Posted {postDateTime}</span>
+         </Typography>
+      )
+   } else if (status === 'Ongoing') {
+      return (
+         <>
+            <Typography variant="body2" style={{ fontWeight: '300' }}>
+               Pickup on{' '}
+               <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
+               <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
+            </Typography>
+         </>
+      )
+   } else if (status === 'Claimed') {
+      return (
+         <Typography variant="body2">
+            <span style={{ color: '#2196F3' }}>Completed</span> •{' '}
+            <span style={{ fontWeight: '200' }}>Claimed {postDateTime}</span>
+         </Typography>
+      )
+   } else if (status === 'Unposted') {
+      return (
+         <Typography variant="body2">
+            <span style={{ color: '#8D6E63' }}>
+               Unposted due to expiry limit
+            </span>
+         </Typography>
+      )
+   } else {
+      console.log('status not found')
    }
-   const handleClose = () => {
-      setOpen(false)
-   }
-
-   return (
-      <Box boxShadow={1} borderRadius={5}>
-         <div className={classes.container__listingitem}>
-            <img
-               className={classes.image__listingitem}
-               src={imgLoc}
-               alt="donation"
-            />
-            <div className={classes.container__listingdetail}>
-               <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
-                     {donationName}
-                  </Typography>
-                  <DonationProgress max={max} left={left} />
-               </div>
-               <div className={classes.container__button}>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_lightblue}
-                     startIcon={<ListAltIcon />}
-                     onClick={handleClickOpen}
-                  >
-                     View details
-                  </Button>
-               </div>
-            </div>
-         </div>
-         <DonationDetails open={open} handleClose={handleClose} />
-      </Box>
-   )
 }
 
-function DonationProgress(props) {
-   const { max, left } = props
-   const multiplier = 100 / max
-   const value = multiplier * (max - left)
-   // const valueBuffer =
-   return (
-      <Box style={{ margin: '7px 0' }}>
-         <Box display="flex" alignItems="center">
-            <Box width="50%">
-               <LinearProgress variant="determinate" value={value} />
-            </Box>
-         </Box>
-         <Box>
-            {left !== 0 ? (
-               <Typography variant="body2">
-                  <span style={{ fontWeight: 'bold' }}>
-                     Remaining quantity left:{' '}
-                  </span>
-                  {left} out of {max}
-               </Typography>
-            ) : (
-               <Typography
-                  variant="body2"
-                  style={{ margin: '8px 0', fontWeight: '300' }}
-               >
-                  All {max} pieces have already been claimed
-               </Typography>
-            )}
-         </Box>
-      </Box>
-   )
+function ActionButtons(props) {
+   const classes = useStyles()
+   const { status } = props
+   const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
+   const theme = useTheme()
+   const responsive = useMediaQuery(theme.breakpoints.down('xs'))
+
+   if (status === 'Posted') {
+      return (
+         <Button
+            disableElevation
+            variant="contained"
+            className={classes.button_grey}
+            startIcon={<ShareIcon />}
+         >
+            Share
+         </Button>
+      )
+   } else if (status === 'Ongoing') {
+      return (
+         <Button
+            disableElevation
+            variant="contained"
+            className={classes.button_grey}
+            startIcon={<ChatBubbleIcon />}
+            onClick={() => {
+               setOpenMessage(true)
+            }}
+         >
+            {responsive ? 'Message' : 'Message Donee'}
+         </Button>
+      )
+   } else if (status === 'Claimed' || status === 'Unposted') {
+      return null
+   }
 }
 
 function DonationDetails(props) {
-   const { handleClose, open } = props
    const classes = useStyles()
+   const { handleClose, open, listingID } = props
+   const [donationDetails, setdonationDetails] = useState(null)
 
+   useEffect(() => {
+      setdonationDetails(
+         donationsData.filter((donation) => donation.listingID === listingID)
+      )
+   }, [listingID])
+
+   if (donationDetails) {
+      console.log(donationDetails)
+   }
    return (
-      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
-         <DialogTitle>Donation Details</DialogTitle>
-         <DialogContent dividers>
-            <Grid container>
-               <Grid container item xs={12} md={6}>
-                  <Grid item xs={3}>
-                     <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5XYbVIMtYStaldxv09IlkCFzQ0vMZh9Ntuw&usqp=CAU"
-                        alt="donation"
-                        style={{
-                           height: '100%',
-                           width: '100%',
-                           borderRadius: '5px',
-                           objectFit: 'cover',
-                        }}
-                     />
-                  </Grid>
-                  <Grid item xs={9}>
-                     <Box style={{ marginLeft: '1rem' }}>
-                        <Typography className={classes.text_bold}>
-                           Pancit Canton Noodles
-                        </Typography>
-                        <Box style={{ margin: '5px 0' }}>
-                           <Chip
-                              label="Instant Noodles"
-                              color="primary"
-                              size="small"
-                           />
-                        </Box>
-                        <Typography variant="body2">
-                           <span style={{ fontWeight: 'bold' }}>Quantity:</span>{' '}
-                           72/100
-                        </Typography>
-                        <Typography variant="body2">
-                           <span style={{ fontWeight: 'bold' }}>
-                              Expiry Date:
-                           </span>{' '}
-                           September 15, 2021
-                        </Typography>
-                     </Box>
-                  </Grid>
-                  <Grid item xs={10}>
-                     <Typography className={classes.text_bold}>
-                        Donation notes
-                     </Typography>
-                     <Typography variant="body2">
-                        i have 100 pieces of lucky me pancit canton noodles.
-                        assorted flavors will be given to you.
-                     </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                     <Divider className={classes.divider_margin} />
-                  </Grid>
-                  <Grid container xs={12}>
-                     <Grid item xs={6}>
-                        <Typography
-                           className={classes.text_bold}
-                           style={{ textAlign: 'center' }}
-                        >
-                           Pickup location
-                        </Typography>
-                        <Typography
-                           variant="body2"
-                           style={{ textAlign: 'center' }}
-                        >
-                           National University-Manila
-                        </Typography>
-                     </Grid>
-                     <Grid item xs={6}>
-                        <Typography
-                           className={classes.text_bold}
-                           style={{ textAlign: 'center' }}
-                        >
-                           Pickup date
-                        </Typography>
-                        <Typography
-                           variant="body2"
-                           style={{ textAlign: 'center' }}
-                        >
-                           July 03, 2021
-                        </Typography>
-                     </Grid>
-                  </Grid>
-               </Grid>
-               <Grid container item xs={12} md={6} direction="column">
-                  <Grid item>
-                     <Typography
-                        variant="h6"
-                        className={classes.text_bold}
-                        gutterBottom
+      <>
+         {donationDetails !== null && (
+            <Dialog
+               open={open}
+               onClose={handleClose}
+               fullWidth={true}
+               maxWidth="lg"
+            >
+               <DialogTitle>Donation Details {listingID}</DialogTitle>
+               <DialogContent dividers>
+                  <Grid container spacing={1} justify="center">
+                     <Grid
+                        container
+                        item
+                        xs={12}
+                        md={6}
+                        justify="center"
+                        alignItems="center"
+                        // style={{ backgroundColor: 'red' }}
                      >
-                        Messages
-                     </Typography>
-                  </Grid>
-                  <Grid item>
-                     <div
-                        style={{
-                           overflowY: 'auto',
-                           maxHeight: '300px',
-                           display: 'flex',
-                           flexDirection: 'column',
-                        }}
-                     >
-                        {data.map((message) => (
-                           <MessageItem
-                              avatar={message.avatar}
-                              doneeName={message.doneeName}
-                              lastMessage={message.lastMessage}
+                        <div
+                           style={{
+                              borderRadius: '5px',
+                              // backgroundColor: 'grey',
+                              width: '80%',
+                              height: '100%',
+                              display: 'flex',
+                              justifyContent: 'center',
+                           }}
+                        >
+                           <img
+                              src={donationDetails[0].imgLoc}
+                              alt="donation"
+                              style={{
+                                 maxWidth: '490px',
+                                 width: '100%',
+                                 height: '100%',
+                                 objectFit: 'contain',
+                              }}
                            />
-                        ))}
-                     </div>
+                        </div>
+                     </Grid>
+                     <Grid container item xs={12} md={6} spacing={1}>
+                        <Grid item>
+                           <Typography
+                              variant="h6"
+                              className={classes.text_bold}
+                           >
+                              {donationDetails[0].donationName}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Box display="flex">
+                              <LocationOnIcon color="secondary" />
+                              <Typography>3 kilometers away</Typography>
+                           </Box>
+                        </Grid>
+                        <Grid item xs={12} style={{ margin: '5px 0' }}>
+                           <Box display="flex">
+                              <Chip
+                                 label={donationDetails[0].donationCategory}
+                                 color="primary"
+                              />
+                           </Box>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                           <Typography
+                              className={classes.text_bold}
+                              style={{ textAlign: 'center' }}
+                           >
+                              Total quantity
+                           </Typography>
+                           <Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].quantity} pieces
+                              </Typography>
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                           <Typography
+                              className={classes.text_bold}
+                              style={{ textAlign: 'center' }}
+                           >
+                              Expiry Date
+                           </Typography>
+                           <Typography
+                              variant="body2"
+                              style={{ textAlign: 'center' }}
+                           >
+                              {donationDetails[0].donationExpiry}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Typography className={classes.text_bold}>
+                              Donation Notes
+                           </Typography>
+                           <Typography variant="body2">
+                              {donationDetails[0].donationNotes}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Divider className={classes.divider_margin} />
+                        </Grid>
+                        <Grid item xs={12}>
+                           <LocationPreview />
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Divider className={classes.divider_margin} />
+                        </Grid>
+                        <Grid container item xs={12}>
+                           <Grid item xs={6}>
+                              <Typography
+                                 className={classes.text_bold}
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 Pickup location
+                              </Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].pickupLocation}
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={6}>
+                              <Typography
+                                 className={classes.text_bold}
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 Pickup date
+                              </Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].pickupDate}
+                              </Typography>
+                           </Grid>
+                        </Grid>
+                     </Grid>
                   </Grid>
-               </Grid>
-            </Grid>
-         </DialogContent>
-      </Dialog>
+               </DialogContent>
+            </Dialog>
+         )}
+      </>
    )
 }
 
-function MessageItem(props) {
-   const classes = useStyles()
-   const { avatar, doneeName, lastMessage } = props
-
-   return (
-      <Box
-         display="flex"
-         alignItems="center"
-         m={1}
-         style={{
-            cursor: 'pointer',
-         }}
-      >
-         <Avatar style={{ marginRight: '1rem' }} alt="user" src={avatar} />
-         <Box>
-            <Typography className={classes.text_bold}>{doneeName}</Typography>
-            <Typography variant="body2">{lastMessage}</Typography>
-         </Box>
-      </Box>
-   )
-}
 const useStyles = makeStyles((theme) => ({
    root: {
       width: '100%',
@@ -507,8 +563,8 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '5px',
    },
    image__listingitem: {
-      width: '150px',
-      height: '150px',
+      width: '100px',
+      height: '100px',
       borderRadius: '5px',
       marginRight: '15px',
       objectFit: 'cover',
@@ -552,3 +608,308 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1.5, 0),
    },
 }))
+
+// function PostedDonation(props) {
+//    const { listingID, donationName, imgLoc, max, left } = props
+//    const classes = useStyles()
+//    const [open, setOpen] = useState(false)
+
+//    const handleClickOpen = () => {
+//       setOpen(true)
+//    }
+//    const handleClose = () => {
+//       setOpen(false)
+//    }
+
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <DonationProgress max={max} left={left} />
+
+//                   <Box display="flex" flexDirection="row">
+//                      <ChatBubbleIcon
+//                         style={{
+//                            fontSize: '20px',
+//                            color: '#2196F3',
+//                            marginRight: '5px',
+//                         }}
+//                      />
+//                      <Typography
+//                         variant="body2"
+//                         style={{ marginBottom: '1.5rem' }}
+//                      >
+//                         You have messages from donees
+//                      </Typography>
+//                   </Box>
+//                </div>
+//                <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                      onClick={handleClickOpen}
+//                   >
+//                      View details
+//                   </Button>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_grey}
+//                      startIcon={<ShareIcon />}
+//                   >
+//                      Share
+//                   </Button>
+//                </div>
+//             </div>
+//          </div>
+//          <DonationDetails open={open} handleClose={handleClose} />
+//       </Box>
+//    )
+// }
+
+// function CompletedDonation(props) {
+//    const { listingID, donationName, imgLoc, max, left } = props
+//    const classes = useStyles()
+//    const [open, setOpen] = useState(false)
+
+//    const handleClickOpen = () => {
+//       setOpen(true)
+//    }
+//    const handleClose = () => {
+//       setOpen(false)
+//    }
+
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <DonationProgress max={max} left={left} />
+//                </div>
+//                <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                      onClick={handleClickOpen}
+//                   >
+//                      View details
+//                   </Button>
+//                </div>
+//             </div>
+//          </div>
+//          <DonationDetails open={open} handleClose={handleClose} />
+//       </Box>
+//    )
+// }
+
+// function DonationProgress(props) {
+//    const { max, left } = props
+//    const multiplier = 100 / max
+//    const value = multiplier * (max - left)
+//    // const valueBuffer =
+//    return (
+//       <Box style={{ margin: '7px 0' }}>
+//          <Box display="flex" alignItems="center">
+//             <Box width="50%">
+//                <LinearProgress variant="determinate" value={value} />
+//             </Box>
+//          </Box>
+//          <Box>
+//             {left !== 0 ? (
+//                <Typography variant="body2">
+//                   <span style={{ fontWeight: 'bold' }}>
+//                      Remaining quantity left:{' '}
+//                   </span>
+//                   {left} out of {max}
+//                </Typography>
+//             ) : (
+//                <Typography
+//                   variant="body2"
+//                   style={{ margin: '8px 0', fontWeight: '300' }}
+//                >
+//                   All {max} pieces have already been claimed
+//                </Typography>
+//             )}
+//          </Box>
+//       </Box>
+//    )
+// }
+
+// function DonationDetails(props) {
+//    const { handleClose, open } = props
+//    const classes = useStyles()
+
+//    return (
+//       <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+//          <DialogTitle>Donation Details</DialogTitle>
+//          <DialogContent dividers>
+//             <Grid container>
+//                <Grid container item xs={12} md={6}>
+//                   <Grid item xs={3}>
+//                      <img
+//                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5XYbVIMtYStaldxv09IlkCFzQ0vMZh9Ntuw&usqp=CAU"
+//                         alt="donation"
+//                         style={{
+//                            height: '100%',
+//                            width: '100%',
+//                            borderRadius: '5px',
+//                            objectFit: 'cover',
+//                         }}
+//                      />
+//                   </Grid>
+//                   <Grid item xs={9}>
+//                      <Box style={{ marginLeft: '1rem' }}>
+//                         <Typography className={classes.text_bold}>
+//                            Pancit Canton Noodles
+//                         </Typography>
+//                         <Box style={{ margin: '5px 0' }}>
+//                            <Chip
+//                               label="Instant Noodles"
+//                               color="primary"
+//                               size="small"
+//                            />
+//                         </Box>
+//                         <Typography variant="body2">
+//                            <span style={{ fontWeight: 'bold' }}>Quantity:</span>{' '}
+//                            72/100
+//                         </Typography>
+//                         <Typography variant="body2">
+//                            <span style={{ fontWeight: 'bold' }}>
+//                               Expiry Date:
+//                            </span>{' '}
+//                            September 15, 2021
+//                         </Typography>
+//                      </Box>
+//                   </Grid>
+//                   <Grid item xs={10}>
+//                      <Typography className={classes.text_bold}>
+//                         Donation notes
+//                      </Typography>
+//                      <Typography variant="body2">
+//                         i have 100 pieces of lucky me pancit canton noodles.
+//                         assorted flavors will be given to you.
+//                      </Typography>
+//                   </Grid>
+//                   <Grid item xs={12}>
+//                      <Divider className={classes.divider_margin} />
+//                   </Grid>
+//                   <Grid container xs={12}>
+//                      <Grid item xs={6}>
+//                         <Typography
+//                            className={classes.text_bold}
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            Pickup location
+//                         </Typography>
+//                         <Typography
+//                            variant="body2"
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            National University-Manila
+//                         </Typography>
+//                      </Grid>
+//                      <Grid item xs={6}>
+//                         <Typography
+//                            className={classes.text_bold}
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            Pickup date
+//                         </Typography>
+//                         <Typography
+//                            variant="body2"
+//                            style={{ textAlign: 'center' }}
+//                         >
+//                            July 03, 2021
+//                         </Typography>
+//                      </Grid>
+//                   </Grid>
+//                </Grid>
+//                <Grid container item xs={12} md={6} direction="column">
+//                   <Grid item>
+//                      <Typography
+//                         variant="h6"
+//                         className={classes.text_bold}
+//                         gutterBottom
+//                      >
+//                         Messages
+//                      </Typography>
+//                   </Grid>
+//                   <Grid item>
+//                      <div
+//                         style={{
+//                            overflowY: 'auto',
+//                            maxHeight: '300px',
+//                            display: 'flex',
+//                            flexDirection: 'column',
+//                         }}
+//                      >
+//                         {data.map((message) => (
+//                            <MessageItem
+//                               avatar={message.avatar}
+//                               doneeName={message.doneeName}
+//                               lastMessage={message.lastMessage}
+//                            />
+//                         ))}
+//                      </div>
+//                   </Grid>
+//                </Grid>
+//             </Grid>
+//          </DialogContent>
+//       </Dialog>
+//    )
+// }
+
+// function MessageItem(props) {
+//    const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
+//    const classes = useStyles()
+//    const { avatar, doneeName, lastMessage } = props
+
+//    return (
+//       <Box
+//          display="flex"
+//          alignItems="center"
+//          m={1}
+//          style={{
+//             cursor: 'pointer',
+//          }}
+//          onClick={() => {
+//             setOpenMessage(true)
+//          }}
+//       >
+//          <Avatar style={{ marginRight: '1rem' }} alt="user" src={avatar} />
+//          <Box>
+//             <Typography className={classes.text_bold}>{doneeName}</Typography>
+//             <Typography variant="body2">{lastMessage}</Typography>
+//          </Box>
+//       </Box>
+//    )
+// }

@@ -12,6 +12,7 @@ import ListAltIcon from '@material-ui/icons/ListAlt'
 import { grey } from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
 import { receivedata } from '../../__mock__/toReceiveData'
+import { useMessageStore } from '../../store/MessageStore'
 
 export default function Received() {
    return (
@@ -53,14 +54,14 @@ function DonationTabs() {
                   textColor="primary"
                   variant="fullWidth"
                >
-                  <Tab label="To Receive" />
+                  <Tab label="Ongoing" />
                   <Tab label="Received" />
                </Tabs>
             </AppBar>
          </Box>
 
          <TabPanel value={value} index={0}>
-            {receivedata.map((donation) => (
+            {/* {receivedata.map((donation) => (
                <ToReceiveDonation
                   listingID={donation.listingID}
                   donationName={donation.donationName}
@@ -69,10 +70,10 @@ function DonationTabs() {
                   pickupLocation={donation.pickupLocation}
                   pickupDate={donation.pickupDate}
                />
-            ))}
+            ))} */}
          </TabPanel>
          <TabPanel value={value} index={1}>
-            {receivedata.map((donation) => (
+            {/* {receivedata.map((donation) => (
                <ReceivedDonation
                   listingID={donation.listingID}
                   donationName={donation.donationName}
@@ -81,7 +82,7 @@ function DonationTabs() {
                   pickupLocation={donation.pickupLocation}
                   pickupDate={donation.pickupDate}
                />
-            ))}
+            ))} */}
          </TabPanel>
       </div>
    )
@@ -121,115 +122,119 @@ function SearchField() {
    )
 }
 
-function ToReceiveDonation(props) {
-   const {
-      listingID,
-      donationName,
-      imgLoc,
-      quantity,
-      pickupLocation,
-      pickupDate,
-   } = props
-   const classes = useStyles()
+// function ToReceiveDonation(props) {
+//    const setOpenMessage = useMessageStore((state) => state.setOpenMessage)
+//    const {
+//       listingID,
+//       donationName,
+//       imgLoc,
+//       quantity,
+//       pickupLocation,
+//       pickupDate,
+//    } = props
+//    const classes = useStyles()
 
-   return (
-      <Box boxShadow={1} borderRadius={5}>
-         <div className={classes.container__listingitem}>
-            <img
-               className={classes.image__listingitem}
-               src={imgLoc}
-               alt="donation"
-            />
-            <div className={classes.container__listingdetail}>
-               <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
-                     {donationName}
-                  </Typography>
-                  <Typography variant="body2">
-                     <span style={{ fontWeight: 'bold' }}>To receive:</span>{' '}
-                     {quantity} pieces
-                  </Typography>
-                  <Typography variant="body2" style={{ fontWeight: '300' }}>
-                     Pickup on{' '}
-                     <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
-                     <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
-                  </Typography>
-               </div>
-               <div className={classes.container__button}>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_lightblue}
-                     startIcon={<ListAltIcon />}
-                  >
-                     Message Donor
-                  </Button>
-               </div>
-            </div>
-         </div>
-      </Box>
-   )
-}
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <Typography variant="body2">
+//                      <span style={{ fontWeight: 'bold' }}>To receive:</span>{' '}
+//                      {quantity} pieces
+//                   </Typography>
+//                   <Typography variant="body2" style={{ fontWeight: '300' }}>
+//                      Pickup on{' '}
+//                      <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
+//                      <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
+//                   </Typography>
+//                </div>
+//                <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                      onClick={() => {
+//                         setOpenMessage(true)
+//                      }}
+//                   >
+//                      Message Donor
+//                   </Button>
+//                </div>
+//             </div>
+//          </div>
+//       </Box>
+//    )
+// }
 
-function ReceivedDonation(props) {
-   const {
-      listingID,
-      donationName,
-      imgLoc,
-      quantity,
-      pickupLocation,
-      pickupDate,
-   } = props
-   const classes = useStyles()
+// function ReceivedDonation(props) {
+//    const {
+//       listingID,
+//       donationName,
+//       imgLoc,
+//       quantity,
+//       pickupLocation,
+//       pickupDate,
+//    } = props
+//    const classes = useStyles()
 
-   return (
-      <Box boxShadow={1} borderRadius={5}>
-         <div className={classes.container__listingitem}>
-            <img
-               className={classes.image__listingitem}
-               src={imgLoc}
-               alt="donation"
-            />
-            <div className={classes.container__listingdetail}>
-               <div>
-                  <Typography
-                     component="h6"
-                     className={classes.text_bold}
-                     style={{ fontSize: '18px' }}
-                  >
-                     {donationName}
-                  </Typography>
-                  <Typography
-                     variant="body2"
-                     style={{ margin: '8px 0', fontWeight: '300' }}
-                  >
-                     You have received {quantity} pieces of this donation
-                  </Typography>
-                  <Typography variant="body2" style={{ fontWeight: '300' }}>
-                     Pickedup on{' '}
-                     <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
-                     <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
-                  </Typography>
-               </div>
-               {/* <div className={classes.container__button}>
-                  <Button
-                     disableElevation
-                     variant="contained"
-                     className={classes.button_lightblue}
-                     startIcon={<ListAltIcon />}
-                  >
-                     Message Donor
-                  </Button>
-               </div> */}
-            </div>
-         </div>
-      </Box>
-   )
-}
+//    return (
+//       <Box boxShadow={1} borderRadius={5}>
+//          <div className={classes.container__listingitem}>
+//             <img
+//                className={classes.image__listingitem}
+//                src={imgLoc}
+//                alt="donation"
+//             />
+//             <div className={classes.container__listingdetail}>
+//                <div>
+//                   <Typography
+//                      component="h6"
+//                      className={classes.text_bold}
+//                      style={{ fontSize: '18px' }}
+//                   >
+//                      {donationName}
+//                   </Typography>
+//                   <Typography
+//                      variant="body2"
+//                      style={{ margin: '8px 0', fontWeight: '300' }}
+//                   >
+//                      You have received {quantity} pieces of this donation
+//                   </Typography>
+//                   <Typography variant="body2" style={{ fontWeight: '300' }}>
+//                      Picked up on{' '}
+//                      <span style={{ fontWeight: '400' }}> {pickupDate}</span> at{' '}
+//                      <span style={{ color: '#2196F3' }}>{pickupLocation}</span>
+//                   </Typography>
+//                </div>
+//                {/* <div className={classes.container__button}>
+//                   <Button
+//                      disableElevation
+//                      variant="contained"
+//                      className={classes.button_lightblue}
+//                      startIcon={<ListAltIcon />}
+//                   >
+//                      Message Donor
+//                   </Button>
+//                </div> */}
+//             </div>
+//          </div>
+//       </Box>
+//    )
+// }
 const useStyles = makeStyles((theme) => ({
    root: {
       width: '100%',

@@ -35,7 +35,7 @@ function Piechart(props) {
             />
          </CardContent>
          <Divider />
-         <CardActions>
+         {/* <CardActions>
             <Button
                size="small"
                color="primary"
@@ -43,7 +43,7 @@ function Piechart(props) {
             >
                Save as PDF
             </Button>
-         </CardActions>
+         </CardActions> */}
       </Card>
    )
 }

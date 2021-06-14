@@ -55,6 +55,11 @@ export default function NavDrawer() {
          </LeftDrawer>
          <DialogDrawer buttonName="Account">
             <Title />
+            <Divider className={classes.divider_margin} />
+            <Subtitle title="Donations" />
+            {iconList.map((list) => (
+               <Tab icon={list.icon} label={list.label} link={list.link} />
+            ))}
          </DialogDrawer>
       </>
    )

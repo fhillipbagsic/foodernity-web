@@ -24,7 +24,6 @@ import { deepOrange } from '@material-ui/core/colors'
 import MainContainer from '../shared/MainContainer'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import LocationPreview from '../shared/LocationPreview'
-import { Controller } from 'react-hook-form'
 import {
    DatePicker,
    KeyboardDatePicker,
@@ -63,10 +62,10 @@ function ActionDrawer() {
             <Title />
             <Divider className={classes.divider_margin} />
             <RequestorAvatar />
-            <Divider className={classes.divider_margin} />
-            <DonationProgess />
-            <Divider className={classes.divider_margin} />
-            <Grid container spacing={1}>
+            {/* <Divider className={classes.divider_margin} /> */}
+            {/* <DonationProgess /> */}
+            {/* <Divider className={classes.divider_margin} /> */}
+            {/* <Grid container spacing={1}>
                <Grid item xs={6}>
                   <QuantityInput />
                </Grid>
@@ -78,7 +77,7 @@ function ActionDrawer() {
                      * always put the earliest expiry date
                   </Typography>
                </Grid>
-            </Grid>
+            </Grid> */}
             <Divider className={classes.divider_margin} />
             <DonateButton />
             <ReportButton />
@@ -223,7 +222,7 @@ function DonateButton() {
 
    return (
       <Button variant="contained" fullWidth className={classes.button_green}>
-         Donate
+         Donate 10 pieces
       </Button>
    )
 }

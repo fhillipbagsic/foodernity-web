@@ -45,12 +45,6 @@ const smallCards = [
       icon: <BusinessIcon />,
    },
    {
-      title: 'Users who Donated',
-      count: '637',
-      color: '#FFEE58',
-      icon: <Icon icon={bxsDonateHeart} />,
-   },
-   {
       title: 'Site Count',
       count: '1560',
       color: '#FF9100',
@@ -102,8 +96,8 @@ function Reports() {
             </Grid>
          </Grid>
          {smallCards.map((card) => (
-            <Grid item xs={12} sm={6} md={3}>
-               <SmallCard
+            <Grid item xs={12} sm={4} xl={3}>
+               <LargeCard
                   title={card.title}
                   count={card.count}
                   color={card.color}

@@ -36,7 +36,7 @@ function HorizontalBarChart(props) {
             />
          </CardContent>
          <Divider />
-         <CardActions>
+         {/* <CardActions>
             <Button
                size="small"
                color="primary"
@@ -44,7 +44,7 @@ function HorizontalBarChart(props) {
             >
                Save as PDF
             </Button>
-         </CardActions>
+         </CardActions> */}
       </Card>
    )
 }

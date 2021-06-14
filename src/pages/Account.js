@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import StyledAppBar from '../components/shared/StyledAppBar'
 import NavDrawer from '../components/account/NavDrawer'
 import AccountContainer from '../components/account/AccountContainer'
-
+import Message from '../components/shared/Message'
 export default function Account() {
    const theme = useTheme()
    const responsive = useMediaQuery(theme.breakpoints.down('sm'))
@@ -23,6 +23,7 @@ export default function Account() {
             <StyledAppBar />
             <NavDrawer />
             <AccountContainer />
+            <Message />
          </div>
       </>
    )
