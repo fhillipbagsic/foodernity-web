@@ -51,7 +51,7 @@ function DonationTabs() {
                <Typography variant="h6" className={classes.text_bold}>
                   Received Donations
                </Typography>
-               <SearchField />
+               {/* <SearchField /> */}
             </div>
             <AppBar
                position="static"
@@ -259,7 +259,7 @@ function ActionButtons(props) {
                setOpenMessage(true)
             }}
          >
-            {responsive ? 'Message' : 'Message Donee'}
+            {responsive ? 'Message' : 'Message Donor'}
          </Button>
       )
    } else if (status === 'Received') {

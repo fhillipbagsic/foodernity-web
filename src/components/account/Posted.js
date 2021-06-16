@@ -50,9 +50,9 @@ function DonationTabs() {
          <Box boxShadow={1} borderRadius={5}>
             <div className={classes.container__search}>
                <Typography variant="h6" className={classes.text_bold}>
-                  My Donations
+                  Posted Donations
                </Typography>
-               <SearchField />
+               {/* <SearchField /> */}
             </div>
             <AppBar
                position="static"
@@ -69,7 +69,7 @@ function DonationTabs() {
                >
                   <Tab label="Posted" />
                   <Tab label="Ongoing" />
-                  <Tab label="Claimed" />
+                  <Tab label="Completed" />
                   <Tab label="Unposted" />
                </Tabs>
             </AppBar>
@@ -247,7 +247,7 @@ function Label(props) {
    if (status === 'Posted') {
       return (
          <Typography variant="body2">
-            Available for request •{' '}
+            Available for receive •{' '}
             <span style={{ fontWeight: '200' }}>Posted {postDateTime}</span>
          </Typography>
       )
@@ -290,14 +290,15 @@ function ActionButtons(props) {
 
    if (status === 'Posted') {
       return (
-         <Button
-            disableElevation
-            variant="contained"
-            className={classes.button_grey}
-            startIcon={<ShareIcon />}
-         >
-            Share
-         </Button>
+         // <Button
+         //    disableElevation
+         //    variant="contained"
+         //    className={classes.button_grey}
+         //    startIcon={<ShareIcon />}
+         // >
+         //    Share
+         // </Button>
+         null
       )
    } else if (status === 'Ongoing') {
       return (

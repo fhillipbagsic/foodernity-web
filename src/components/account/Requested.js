@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import {
-   Avatar,
    Button,
    Chip,
    Dialog,
@@ -14,8 +13,6 @@ import {
    DialogTitle,
    Divider,
    Grid,
-   LinearProgress,
-   Paper,
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
@@ -51,7 +48,7 @@ function DonationTabs() {
                <Typography variant="h6" className={classes.text_bold}>
                   Requested Donations
                </Typography>
-               <SearchField />
+               {/* <SearchField /> */}
             </div>
             <AppBar
                position="static"
@@ -67,7 +64,9 @@ function DonationTabs() {
                   variant="fullWidth"
                >
                   <Tab label="My Requests" />
-                  <Tab label="My Fulfilled Requests" />
+                  <Tab label="My Unfulfilled Request" />
+                  <Tab label="Other's Request Ongoing" />
+                  <Tab label="Other's Request Fulfilled" />
                </Tabs>
             </AppBar>
          </Box>
@@ -83,6 +82,11 @@ function DonationTabs() {
             ))}
          </TabPanel>
          <TabPanel value={value} index={1}></TabPanel>
+         {/* <TabPanel value={value} index={0}></TabPanel> */}
+         {/* <TabPanel value={value} index={0}></TabPanel>
+         <TabPanel value={value} index={}>
+            <Typography>unfulfilled</Typography>
+         </TabPanel> */}
       </div>
    )
 }
