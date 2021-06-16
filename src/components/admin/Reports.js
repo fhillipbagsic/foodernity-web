@@ -10,14 +10,12 @@ import {
    totalUsersPerLocationData,
 } from '../../__mock__/ReportsData'
 
-import Piechart from './Piechart'
-import HorizontalBarChart from './HorizontalBarChart'
+import Piechart from '../shared/Piechart'
+import HorizontalBarChart from '../shared/HorizontalBarChart'
 import { Avatar, Card, CardContent, Typography } from '@material-ui/core'
 import FastfoodIcon from '@material-ui/icons/Fastfood'
 import BusinessIcon from '@material-ui/icons/Business'
 import GroupIcon from '@material-ui/icons/Group'
-import { Icon } from '@iconify/react'
-import bxsDonateHeart from '@iconify-icons/bx/bxs-donate-heart'
 import WebIcon from '@material-ui/icons/Web'
 
 const useStyles = makeStyles((theme) => ({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, fade } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -23,6 +23,8 @@ import ListAltIcon from '@material-ui/icons/ListAlt'
 import ShareIcon from '@material-ui/icons/Share'
 import { grey } from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
+import LocationPreview from '../shared/LocationPreview'
+import { data } from '../../__mock__/requestData'
 
 export default function Requested() {
    return (
@@ -70,7 +72,16 @@ function DonationTabs() {
             </AppBar>
          </Box>
 
-         <TabPanel value={value} index={0}></TabPanel>
+         <TabPanel value={value} index={0}>
+            {data.map((item) => (
+               <RequestItem
+                  listingID={item.listingID}
+                  imgLoc={item.imgLoc}
+                  requestName={item.requestName}
+                  postDateTime={item.postDateTime}
+               />
+            ))}
+         </TabPanel>
          <TabPanel value={value} index={1}></TabPanel>
       </div>
    )
@@ -107,6 +118,213 @@ function SearchField() {
             inputProps={{ 'aria-label': 'search' }}
          />
       </div>
+   )
+}
+
+function RequestItem(props) {
+   const { listingID, imgLoc, requestName, postDateTime } = props
+   const classes = useStyles()
+
+   const [open, setOpen] = useState(false)
+
+   const handleClickOpen = () => {
+      setOpen(true)
+   }
+   const handleClose = () => {
+      setOpen(false)
+   }
+
+   return (
+      <Box boxShadow={1} borderRadius={5}>
+         <div className={classes.container__listingitem}>
+            <img
+               className={classes.image__listingitem}
+               src={imgLoc}
+               alt="donation"
+            />
+            <div className={classes.container__listingdetail}>
+               <div>
+                  <Typography variant="body1" className={classes.text_bold}>
+                     {requestName}
+                  </Typography>
+                  <Typography variant="body2" style={{ fontWeight: '200' }}>
+                     Requested {postDateTime}
+                  </Typography>
+               </div>
+               <div className={classes.container__button}>
+                  <Button
+                     disableElevation
+                     variant="contained"
+                     className={classes.button_lightblue}
+                     startIcon={<ListAltIcon />}
+                     onClick={handleClickOpen}
+                  >
+                     View Details
+                  </Button>
+               </div>
+            </div>
+         </div>
+         <DonationDetails
+            listingID={listingID}
+            open={open}
+            handleClose={handleClose}
+         />
+      </Box>
+   )
+}
+
+function DonationDetails(props) {
+   const classes = useStyles()
+   const { handleClose, open, listingID } = props
+   const [donationDetails, setdonationDetails] = useState(null)
+
+   useEffect(() => {
+      setdonationDetails(
+         data.filter((donation) => donation.listingID === listingID)
+      )
+   }, [listingID])
+
+   if (donationDetails) {
+      console.log(donationDetails)
+   }
+   return (
+      <>
+         {donationDetails !== null && (
+            <Dialog
+               open={open}
+               onClose={handleClose}
+               fullWidth={true}
+               maxWidth="lg"
+            >
+               <DialogTitle>Request Details {listingID}</DialogTitle>
+               <DialogContent dividers>
+                  <Grid container spacing={1} justify="center">
+                     <Grid
+                        container
+                        item
+                        xs={12}
+                        md={6}
+                        justify="center"
+                        alignItems="center"
+                        // style={{ backgroundColor: 'red' }}
+                     >
+                        <div
+                           style={{
+                              borderRadius: '5px',
+                              // backgroundColor: 'grey',
+                              width: '80%',
+                              height: '100%',
+                              display: 'flex',
+                              justifyContent: 'center',
+                           }}
+                        >
+                           <img
+                              src={donationDetails[0].imgLoc}
+                              alt="donation"
+                              style={{
+                                 maxWidth: '490px',
+                                 width: '100%',
+                                 height: '100%',
+                                 maxHeight: '600px',
+                                 objectFit: 'contain',
+                              }}
+                           />
+                        </div>
+                     </Grid>
+                     <Grid container item xs={12} md={6} spacing={1}>
+                        <Grid item>
+                           <Typography
+                              variant="h6"
+                              className={classes.text_bold}
+                           >
+                              {donationDetails[0].requestName}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Box display="flex">
+                              <Chip
+                                 label={donationDetails[0].requestCategory}
+                                 color="primary"
+                              />
+                           </Box>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                           <Typography
+                              className={classes.text_bold}
+                              style={{ textAlign: 'center' }}
+                           >
+                              Total quantity
+                           </Typography>
+                           <Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].quantity} pieces
+                              </Typography>
+                           </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                           <Typography
+                              className={classes.text_bold}
+                              style={{ textAlign: 'center' }}
+                           >
+                              Request Notes
+                           </Typography>
+                           <Typography
+                              variant="body2"
+                              style={{ textAlign: 'center' }}
+                           >
+                              {donationDetails[0].requestNotes}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Divider className={classes.divider_margin} />
+                        </Grid>
+                        <Grid item xs={12}>
+                           <LocationPreview />
+                        </Grid>
+                        <Grid item xs={12}>
+                           <Divider className={classes.divider_margin} />
+                        </Grid>
+                        <Grid container item xs={12}>
+                           <Grid item xs={6}>
+                              <Typography
+                                 className={classes.text_bold}
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 Pickup location
+                              </Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].pickupLocation}
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={6}>
+                              <Typography
+                                 className={classes.text_bold}
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 Pickup date
+                              </Typography>
+                              <Typography
+                                 variant="body2"
+                                 style={{ textAlign: 'center' }}
+                              >
+                                 {donationDetails[0].pickupDate}
+                              </Typography>
+                           </Grid>
+                        </Grid>
+                     </Grid>
+                  </Grid>
+               </DialogContent>
+            </Dialog>
+         )}
+      </>
    )
 }
 

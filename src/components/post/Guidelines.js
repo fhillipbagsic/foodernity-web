@@ -7,6 +7,7 @@ import {
    Checkbox,
    FormControlLabel,
    Typography,
+   Grid,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { usePostStore } from '../../store/PostStore'
@@ -27,22 +28,19 @@ const useStyles = makeStyles({
 const guidelines = [
    {
       name: 'guidelines1',
-      label: 'I acknowledge that I am donating consumables which are the following:',
-      description: '',
+      label: 'I acknowledge that I am donating foods that are in the following:',
    },
    {
       name: 'guidelines2',
-      label: 'I acknowledge that I practice safe food handling practices',
-      description: 'Guidelines 2 desc',
+      label: 'I acknowledge that I am not donating foods that are in the following:',
    },
    {
       name: 'guidelines3',
-      label: 'I acknowledge that I am not donating consumables which are the following:',
-      description: 'Guidelines 3 desc',
+      label: 'I acknowledge that I practice safe food handling practices',
    },
 ]
 // returns the guidelines when donating
-function Guidelines() {
+export default function Guidelines() {
    const classes = useStyles()
    const checkedGuidelines = usePostStore((state) => state.checkedGuidelines)
    const setCheckedGuidelines = usePostStore(
@@ -119,74 +117,119 @@ function AccordionItem(props) {
             />
          </AccordionSummary>
          <AccordionDetails>
-            <div>
-               <div>
-                  <Typography style={{ fontWeight: 'bold' }}>
-                     Home-Prepared Foods
-                  </Typography>
-                  <Typography>
-                     Most homeprepared foods are not allowed to accept or serve
-                     most types of homeprepared foods. However, homemade baked
-                     goods that do not need refrigeration to remain safe (such
-                     as cookies, cakes, fruit pies, and breads) may be received
-                     from DONORS.
-                  </Typography>
-               </div>
-               <br />
-               <div>
-                  <Typography style={{ fontWeight: 'bold' }}>
-                     Commercially Packaged Foods Not Needing Refrigeration
-                  </Typography>
-                  <Typography>
-                     The donation of commercially canned, boxed, and otherwise
-                     packaged foods is encouraged.
-                  </Typography>
-               </div>
-               <br />
-               <div>
-                  <Typography style={{ fontWeight: 'bold' }}>
-                     Fresh Produce Donations
-                  </Typography>
-                  <Typography>
-                     Food donations may include fresh produce, including
-                     home-grown fruits and vegetables. Fresh produce should be
-                     protected from contamination and receive final preparation,
-                     such as washing and cutting, in a DONOR KITCHEN or licensed
-                     kitchen.
-                  </Typography>
-               </div>
-               <br />
-               <div>
-                  <Typography style={{ fontWeight: 'bold' }}>
-                     Food Prepared in a DONOR KITCHEN
-                  </Typography>
-                  <Typography>
-                     Except for baked goods (such as bread, cookies, and fruit
-                     pies), DONATED FOOD DISTRIBUTING ORGANIZATIONS may not
-                     accept foods prepared in a home kitchen. Instead, foods for
-                     donation should be prepared in either a DONOR KITCHEN or a
-                     commercial food establishment, such as a restaurant.
-                  </Typography>
-               </div>
-               <br />
-               <div>
-                  <Typography style={{ fontWeight: 'bold' }}>
-                     Food Donation by Licensed Food Establishments
-                  </Typography>
-                  <Typography>
-                     Licensed food establishments are encouraged to donate
-                     surplus foods to DONATED FOOD DISTRIBUTING ORGANIZATIONS.
-                     Because licensed food establishments have commercial-grade
-                     equipment, unlike many DONOR KITCHENS, these may safely
-                     include foods that have gone through typical multiple food
-                     preparation steps and handled with the same consideration
-                     for safety as the food sold to customers.
-                  </Typography>
-               </div>
-            </div>
+            <GuidelinesDescription name={name} />
          </AccordionDetails>
       </Accordion>
    )
 }
 
-export default Guidelines
+function GuidelinesDescription(props) {
+   const classes = useStyles()
+   const { name } = props
+   if (name === 'guidelines1') {
+      return (
+         <Grid container direction="column" spacing={1}>
+            <Grid item>
+               <Typography
+                  variant="h6"
+                  className={classes.text_bold}
+               ></Typography>
+               <Typography>
+                  <span className={classes.text_bold}>Canned Goods</span> —
+                  Canned fruits and vegetables, milks and sauces, meat and fish,
+                  soups, and the likes
+               </Typography>
+            </Grid>
+            <Grid item>
+               <Typography>
+                  <span className={classes.text_bold}>Instant Noodles</span> —
+                  Instant noodles such as soup noodles, friend noodles,
+                  non-fried noodles, and the likes
+               </Typography>
+            </Grid>
+            <Grid item>
+               <Typography>
+                  <span className={classes.text_bold}>
+                     Snacks &amp; Biscuits
+                  </span>{' '}
+                  — Any kinds of snacks and biscuits
+               </Typography>
+            </Grid>
+            <Grid item>
+               <Typography>
+                  <span className={classes.text_bold}>Beverages</span> — Water,
+                  tea, coffee, soft drinks, juice drinks (alcoholic are
+                  prohibited)
+               </Typography>
+            </Grid>
+            <Grid item>
+               <Typography>
+                  <span className={classes.text_bold}>Others</span> — Other
+                  non-perishable foods that don't require refrigeration (e.g.,
+                  condiments)
+               </Typography>
+            </Grid>
+         </Grid>
+      )
+   } else if (name === 'guidelines2') {
+      return (
+         <>
+            <Grid container direction="column" spacing={1}>
+               <Grid item>
+                  <Typography
+                     variant="h6"
+                     className={classes.text_bold}
+                  ></Typography>
+                  <Typography>
+                     <span className={classes.text_bold}>
+                        Home-cooked foods
+                     </span>{' '}
+                     — Foods prepared, cooked, cooled, or reheated at home.
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Typography>
+                     <span className={classes.text_bold}>Expired foods</span> —
+                     Foods that are past a “use by / consume by” date.
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Typography>
+                     <span className={classes.text_bold}>
+                        Foods in containers
+                     </span>{' '}
+                     — Foods taken out of their original packaging and placed
+                     into containers.
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Typography>
+                     <span className={classes.text_bold}>Opened foods</span> —
+                     Foods in opened or torn containers exposing the food to
+                     potential contamination.
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Typography>
+                     <span className={classes.text_bold}>Raw foods</span> —
+                     Meat, beef, pork, poultry, and the likes.
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Typography>
+                     <span className={classes.text_bold}>Others</span> — Other
+                     perishables such as fruits, vegetables, dairy products,
+                     eggs, meat, poultry, and seafood.
+                  </Typography>
+               </Grid>
+            </Grid>
+         </>
+      )
+   } else if (name === 'guidelines3') {
+      return (
+         <>
+            <Typography>3</Typography>
+         </>
+      )
+   }
+}

@@ -85,6 +85,7 @@ function DonationTabs() {
                      pickupDate={donation.pickupDate}
                      status={donation.status}
                      postDateTime={donation.postDateTime}
+                     type={donation.type}
                   />
                ))}
          </TabPanel>
@@ -101,6 +102,7 @@ function DonationTabs() {
                      pickupDate={donation.pickupDate}
                      status={donation.status}
                      postDateTime={donation.postDateTime}
+                     type={donation.type}
                   />
                ))}
          </TabPanel>
@@ -151,6 +153,7 @@ function DonationItem(props) {
       pickupDate,
       status,
       postDateTime,
+      type,
    } = props
    const theme = useTheme()
    const responsiveLayout = useMediaQuery(theme.breakpoints.down('xs'))
@@ -177,12 +180,17 @@ function DonationItem(props) {
                   <Typography variant="body1" className={classes.text_bold}>
                      {donationName}
                   </Typography>
+
                   <Label
                      status={status}
                      postDateTime={postDateTime}
                      pickupLocation={pickupLocation}
                      pickupDate={pickupDate}
                   />
+                  <Typography variant="caption">
+                     From{' '}
+                     {type === 'Request' ? 'My Request' : 'Posted Donations'}
+                  </Typography>
                </div>
                <div className={classes.container__button}>
                   <Button

@@ -1,7 +1,43 @@
-import { Box, makeStyles, Typography, Grid } from '@material-ui/core'
-
+import {
+   Box,
+   makeStyles,
+   Typography,
+   Grid,
+   Card,
+   CardContent,
+   Avatar,
+   Divider,
+} from '@material-ui/core'
+import FastfoodIcon from '@material-ui/icons/Fastfood'
 import { Icon } from '@iconify/react'
 import bxsDonateHeart from '@iconify-icons/bx/bxs-donate-heart'
+import {
+   myDonationsPerCategoryData,
+   myMostClaimedCategoryData,
+   myMostSpoiledCategoryData,
+} from '../../__mock__/ProfileData'
+import Piechart from '../shared/Piechart'
+
+const largeCards = [
+   {
+      title: 'Donations Posted',
+      count: '18',
+      color: '#FF7043',
+      icon: <FastfoodIcon />,
+   },
+   {
+      title: 'Donations Received',
+      count: '6',
+      color: '#66BB6A',
+      icon: <FastfoodIcon />,
+   },
+   {
+      title: 'Donations Requested',
+      count: '5',
+      color: '#E35141',
+      icon: <FastfoodIcon />,
+   },
+]
 
 export default function Profile() {
    const classes = useStyles()
@@ -11,11 +47,27 @@ export default function Profile() {
          <div className={classes.background} />
          <UserInformation />
          <Grid container spacing={3}>
-            <Grid item xs={12} lg={4}>
-               {/* <UserStatistics /> */}
+            {largeCards.map((card) => (
+               <Grid item xs={12} sm={4} xl={3}>
+                  <LargeCard
+                     title={card.title}
+                     count={card.count}
+                     color={card.color}
+                     icon={card.icon}
+                  />
+               </Grid>
+            ))}
+            <Grid item xs={12}>
+               <Divider />
             </Grid>
-            <Grid item xs={12} lg={8}>
-               {/* <DonationStatistics /> */}
+            <Grid item xs={12} md={4}>
+               <TotalDonationsPerCategory />
+            </Grid>
+            <Grid item xs={12} md={4}>
+               <MostClaimedCategory />
+            </Grid>
+            <Grid item xs={12} md={4}>
+               <MostSpoiledCategory />
             </Grid>
          </Grid>
       </div>
@@ -48,6 +100,70 @@ function UserInformation() {
             </Typography>
          </div>
       </>
+   )
+}
+
+function LargeCard(props) {
+   const { title, count, color, icon } = props
+   const classes = useStyles()
+
+   return (
+      <Card>
+         <CardContent>
+            <Grid
+               container
+               spacing={3}
+               component="div"
+               display="flex"
+               justify="space-between"
+            >
+               <Grid item>
+                  <Typography color="textSecondary" gutterBottom variant="h6">
+                     {title}
+                  </Typography>
+                  <Typography color="textPrimary" variant="h5">
+                     {count}
+                  </Typography>
+               </Grid>
+               <Grid item>
+                  <Avatar
+                     className={classes.icon__avatar_large}
+                     style={{
+                        backgroundColor: color,
+                     }}
+                  >
+                     {icon}
+                  </Avatar>
+               </Grid>
+            </Grid>
+         </CardContent>
+      </Card>
+   )
+}
+
+function TotalDonationsPerCategory() {
+   return (
+      <Piechart
+         data={myDonationsPerCategoryData}
+         chartLabel="My donations per category"
+      />
+   )
+}
+
+function MostClaimedCategory() {
+   return (
+      <Piechart
+         data={myMostClaimedCategoryData}
+         chartLabel="Most claimed category"
+      />
+   )
+}
+function MostSpoiledCategory() {
+   return (
+      <Piechart
+         data={myMostSpoiledCategoryData}
+         chartLabel="Most spoiled category"
+      />
    )
 }
 

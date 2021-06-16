@@ -1,41 +1,40 @@
-import { Divider, Grid, makeStyles, Typography } from '@material-ui/core'
+import {
+   Divider,
+   Grid,
+   makeStyles,
+   Typography,
+   ListItem,
+   ListItemText,
+   List,
+} from '@material-ui/core'
 import DialogDrawer from '../shared/DialogDrawer'
 import LeftDrawer from '../shared/LeftDrawer'
 import ReceiptIcon from '@material-ui/icons/Receipt'
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded'
 import EditRoundedIcon from '@material-ui/icons/EditRounded'
 import { Link, useRouteMatch } from 'react-router-dom'
-const iconList = [
+
+const DonationItems = [
    {
       label: 'Posted Donations',
-      icon: <ReceiptIcon />,
-      color: '#66BB6A',
       link: '',
    },
    {
       label: 'Received Donations',
-      icon: <ReceiptIcon />,
-      color: '#66BB6A',
       link: '/receiveddonations',
    },
    {
       label: 'Requested Donations',
-      icon: <ReceiptIcon />,
-      color: '#66BB6A',
       link: '/requesteddonations',
    },
 ]
-const iconList2 = [
+const ProfileItems = [
    {
       label: 'My Profile',
-      icon: <AccountBoxRoundedIcon />,
-      color: '#2196F3',
       link: '/myprofile',
    },
    {
       label: 'Edit Profile',
-      icon: <EditRoundedIcon />,
-      color: '#2196F3',
       link: '/editprofile',
    },
 ]
@@ -48,22 +47,34 @@ export default function NavDrawer() {
          <LeftDrawer>
             <Title />
             <Divider className={classes.divider_margin} />
-            <Subtitle title="Donations" />
-            {iconList.map((list) => (
-               <Tab icon={list.icon} label={list.label} link={list.link} />
-            ))}
-            <Subtitle title="Profile" />
-            {iconList2.map((list) => (
-               <Tab icon={list.icon} label={list.label} link={list.link} />
-            ))}
+            <Subtitle
+               title="Donations"
+               icon={<AccountBoxRoundedIcon style={{ color: '#66BB6A' }} />}
+               color="#66BB6A"
+            />
+            <DonationTabs />
+            <Subtitle
+               title="Profile"
+               icon={<AccountBoxRoundedIcon style={{ color: '#2196F3' }} />}
+               color="#2196F3"
+            />
+            <ProfileTabs />
          </LeftDrawer>
          <DialogDrawer buttonName="Account">
             <Title />
             <Divider className={classes.divider_margin} />
-            <Subtitle title="Donations" />
-            {iconList.map((list) => (
-               <Tab icon={list.icon} label={list.label} link={list.link} />
-            ))}
+            <Subtitle
+               title="Donations"
+               icon={<AccountBoxRoundedIcon style={{ color: '#66BB6A' }} />}
+               color="#66BB6A"
+            />
+            <DonationTabs />
+            <Subtitle
+               title="Profile"
+               icon={<AccountBoxRoundedIcon style={{ color: '#2196F3' }} />}
+               color="#2196F3"
+            />
+            <ProfileTabs />
          </DialogDrawer>
       </>
    )
@@ -85,36 +96,70 @@ function Title() {
    )
 }
 function Subtitle(props) {
+   const { title, icon, color } = props
    const classes = useStyles()
    return (
-      <div>
+      <div
+         style={{
+            display: 'flex',
+            alignItems: 'center',
+            // backgroundColor: 'yellow',
+         }}
+      >
+         {icon}
          <Typography
             className={`${classes.subtitle} ${classes.text_bold}`}
             gutterBottom
             variant="h6"
-            component="h2"
-            style={{ color: props.color }}
+            // component="h2"
+            style={{
+               color: color,
+               // backgroundColor: 'red',
+               marginTop: '7px',
+               marginLeft: '.5rem',
+            }}
          >
-            {props.title}
+            {title}
          </Typography>
       </div>
    )
 }
 
-function Tab(props) {
-   const classes = useStyles()
-   const { label, icon, link } = props
+function DonationTabs(props) {
    let { url } = useRouteMatch()
+
    return (
-      <Grid
-         container
-         direction="row"
-         className={`${classes.container__tab} ${classes.hover}`}
-         component={Link}
-         to={`${url}${link}`}
-      >
-         <Typography>{label}</Typography>
-      </Grid>
+      <List>
+         {DonationItems.map((item) => (
+            <ListItem
+               button
+               key={item.label}
+               component={Link}
+               to={`${url}${item.link}`}
+            >
+               <ListItemText primary={item.label} />
+            </ListItem>
+         ))}
+      </List>
+   )
+}
+
+function ProfileTabs(props) {
+   let { url } = useRouteMatch()
+
+   return (
+      <List>
+         {ProfileItems.map((item) => (
+            <ListItem
+               button
+               key={item.label}
+               component={Link}
+               to={`${url}${item.link}`}
+            >
+               <ListItemText primary={item.label} />
+            </ListItem>
+         ))}
+      </List>
    )
 }
 

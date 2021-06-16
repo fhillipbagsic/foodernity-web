@@ -60,11 +60,9 @@ function PickupDetails() {
    const { handleSubmit, control } = useForm()
    const classes = useStyles()
    const setPickupDate = usePostStore((state) => state.setPickupDate)
-   const setPickupTime = usePostStore((state) => state.setPickupTime)
 
    const onSubmit = (data) => {
       setPickupDate(data.pickupDate)
-      setPickupTime(data.pickupTime)
    }
 
    return (

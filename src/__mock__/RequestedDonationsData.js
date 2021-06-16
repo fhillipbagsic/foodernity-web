@@ -1,6 +1,21 @@
 export const requestedData = [
    {
       listingID: 1,
+      imgLoc: 'https://c1.staticflickr.com/5/4158/33593402264_bedafb79d1_c.jpg',
+      donationName: 'Lucky Me Pancit Canton Noodles',
+      quantity: 12,
+      donationCategory: 'Instant Noodles',
+      donationExpiry: 'September 15, 2021',
+      donationNotes:
+         'i have 12 pieces of lucky me pancit canton noodles. assorted flavors will be given to you.',
+      pickupLocation: 'National University-Manila',
+      pickupDate: 'July 03, 2021',
+      postDateTime: '1hr ago',
+      status: 'Ongoing',
+      type: 'Posted',
+   },
+   {
+      listingID: 2,
       imgLoc: 'https://i.ebayimg.com/images/g/l7IAAOSw7eldO0nJ/s-l300.jpg',
       donationName: 'Lucky me pancit canton',
       quantity: 10,
@@ -11,9 +26,10 @@ export const requestedData = [
       pickupDate: 'June 21, 2021',
       postDateTime: '1hr ago',
       status: 'Ongoing',
+      type: 'Request',
    },
    {
-      listingID: 2,
+      listingID: 3,
       imgLoc:
          'https://ph-test-11.slatic.net/p/0a4d22b7f86654a176fa54d1b374d1b7.jpg',
       donationName: 'Century tuna',
@@ -26,9 +42,10 @@ export const requestedData = [
       pickupDate: 'June 22, 2021',
       postDateTime: '2hr ago',
       status: 'Ongoing',
+      type: 'Posted',
    },
    {
-      listingID: 3,
+      listingID: 4,
       imgLoc:
          'https://ph-test-11.slatic.net/p/83cdc5012a6541bbef182c9eec0fba0e.jpg',
       donationName: 'Butter coconut',
@@ -41,5 +58,6 @@ export const requestedData = [
       pickupDate: 'June 18, 2021',
       postDateTime: '1d ago',
       status: 'Received',
+      type: 'Posted',
    },
 ]
